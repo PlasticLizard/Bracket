@@ -3,7 +3,7 @@ Bracket
 Run Rack-based web applications on IIS, or via an embedded / alternative .NET web server,
 based on the [IronRuby.Rack sample](http://github.com/ironruby/ironruby/tree/master/Merlin/Main/Hosts/IronRuby.Rack/), which is part of the [IronRuby project](http://github.com/ironruby/ironruby).
 In addition to the IIS support copied from the IronRuby.Rack sample,
-Bracket currently supports hosting Ruby Rack applications using System.Web.HttpListener, [C# Web Server](http://www.codeplex.com/webserver)
+Bracket currently supports hosting Ruby Rack applications using [System.Web.HttpListener](http://www.paraesthesia.com/archive/2008/07/16/simplest-embedded-web-server-ever-with-httplistener.aspx), [C# Web Server](http://www.codeplex.com/webserver)
 or via the (still emerging) [Kayak web server](http://runkayak.com/). If you have some other form of HTTP input
 you would like to use to feed Rack applications (Perhaps the .NET Service Bus), it is trivial to create a new adapter using this library.
 
