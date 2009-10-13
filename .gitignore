@@ -1,0 +1,15 @@
+*.csproj.vspscc
+*.csproj.user
+*.vssscc
+*.log
+bin
+obj
+*.proj
+*.suo
+*.sln.cache
+*.vshost.exe
+*.vshost.exe.manifest
+.eprj
+*resharper*
+*.*resharper*
+*ReSharper*.*
