@@ -19,8 +19,10 @@ those gems are installed as well.
 1. Install Rack
 > igem install rack
 
-2. Install other gems if desired
+2a. Install Sinatra if desired
 > igem install sinatra
+
+2b. Install Rails if desired
 > igem install rails
 
 3. Install IIS (if you want to run the IIS samples)
