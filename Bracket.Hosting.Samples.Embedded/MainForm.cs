@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Windows.Forms;
 using Bracket.Hosting.HttpServer;
@@ -118,6 +119,12 @@ namespace Bracket.Hosting.Samples.Embedded
             if(_kayakServer != null)
                 _kayakServer.Dispose();
 
+        }
+
+        private void btnOpenInBrowser_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(txtUrl.Text))
+            Process.Start(txtUrl.Text);
         }
     }
 }

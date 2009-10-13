@@ -42,9 +42,10 @@
             this.txtOutput = new System.Windows.Forms.TextBox();
             this.btnStopServer = new System.Windows.Forms.Button();
             this.grpApplicationType = new System.Windows.Forms.GroupBox();
+            this.radRails = new System.Windows.Forms.RadioButton();
             this.radSinatraApp = new System.Windows.Forms.RadioButton();
             this.radRackApp = new System.Windows.Forms.RadioButton();
-            this.radRails = new System.Windows.Forms.RadioButton();
+            this.btnOpenInBrowser = new System.Windows.Forms.Button();
             this.grpServerLib.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -131,6 +132,7 @@
             // 
             this.panel1.Controls.Add(this.txtUrl);
             this.panel1.Controls.Add(this.btnBrowserNavigate);
+            this.panel1.Controls.Add(this.btnOpenInBrowser);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(3, 16);
             this.panel1.Name = "panel1";
@@ -142,14 +144,14 @@
             this.txtUrl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtUrl.Location = new System.Drawing.Point(0, 0);
             this.txtUrl.Name = "txtUrl";
-            this.txtUrl.Size = new System.Drawing.Size(672, 20);
+            this.txtUrl.Size = new System.Drawing.Size(576, 20);
             this.txtUrl.TabIndex = 0;
             this.txtUrl.Text = "http://localhost:9876";
             // 
             // btnBrowserNavigate
             // 
             this.btnBrowserNavigate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnBrowserNavigate.Location = new System.Drawing.Point(672, 0);
+            this.btnBrowserNavigate.Location = new System.Drawing.Point(576, 0);
             this.btnBrowserNavigate.Name = "btnBrowserNavigate";
             this.btnBrowserNavigate.Size = new System.Drawing.Size(75, 20);
             this.btnBrowserNavigate.TabIndex = 1;
@@ -199,6 +201,16 @@
             this.grpApplicationType.TabStop = false;
             this.grpApplicationType.Text = "Application";
             // 
+            // radRails
+            // 
+            this.radRails.AutoSize = true;
+            this.radRails.Location = new System.Drawing.Point(6, 65);
+            this.radRails.Name = "radRails";
+            this.radRails.Size = new System.Drawing.Size(48, 17);
+            this.radRails.TabIndex = 0;
+            this.radRails.Text = "Rails";
+            this.radRails.UseVisualStyleBackColor = true;
+            // 
             // radSinatraApp
             // 
             this.radSinatraApp.AutoSize = true;
@@ -221,15 +233,16 @@
             this.radRackApp.Text = "Generic Rack Application";
             this.radRackApp.UseVisualStyleBackColor = true;
             // 
-            // radRails
+            // btnOpenInBrowser
             // 
-            this.radRails.AutoSize = true;
-            this.radRails.Location = new System.Drawing.Point(6, 65);
-            this.radRails.Name = "radRails";
-            this.radRails.Size = new System.Drawing.Size(48, 17);
-            this.radRails.TabIndex = 0;
-            this.radRails.Text = "Rails";
-            this.radRails.UseVisualStyleBackColor = true;
+            this.btnOpenInBrowser.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOpenInBrowser.Location = new System.Drawing.Point(651, 0);
+            this.btnOpenInBrowser.Name = "btnOpenInBrowser";
+            this.btnOpenInBrowser.Size = new System.Drawing.Size(96, 20);
+            this.btnOpenInBrowser.TabIndex = 2;
+            this.btnOpenInBrowser.Text = "Launch Browser";
+            this.btnOpenInBrowser.UseVisualStyleBackColor = true;
+            this.btnOpenInBrowser.Click += new System.EventHandler(this.btnOpenInBrowser_Click);
             // 
             // MainForm
             // 
@@ -276,6 +289,7 @@
         private System.Windows.Forms.RadioButton radSinatraApp;
         private System.Windows.Forms.RadioButton radRackApp;
         private System.Windows.Forms.RadioButton radRails;
+        private System.Windows.Forms.Button btnOpenInBrowser;
     }
 }
 
