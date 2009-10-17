@@ -9,9 +9,10 @@ you would like to use to feed Rack applications (Perhaps the .NET Service Bus), 
 
 Setup
 -----
-The Bracket samples assume you have IronRuby installed at c:\IronRuby. You will need to change the 
-'LibraryPaths' node and the GemPath app setting in the App.config (embedded sample) or Web.config (IIS sample) if you have IronRuby
-installed elsewhere.
+The Bracket samples are configured to rely on a copy of the IronRuby standard library and required gems stored in a zip 
+file bundled with each sample. If you want to use your own copy of the IronRuby standard libraries, simply
+change the App.config (embedded sample) or Web.config (IIS sample) so that the library paths point to
+your own install location. However, you do not need IronRuby installed on your machine to run the samples.
 
 Bracket assumes that at a minimum Rack is installed. To run the Sinatra or Rails samples, you'll need to make sure
 those gems are installed as well.

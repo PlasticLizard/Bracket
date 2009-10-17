@@ -1,0 +1,390 @@
+# Logfile created on Thu Oct 08 17:10:17 -07:00 2009
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-08 17:10:28) [GET]
+Rendering test/index
+Completed in 956ms (View: 897 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-08 17:10:44) [GET]
+Rendering test/index
+Completed in 608ms (View: 597 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-08 17:10:50) [GET]
+Rendering test/index
+Completed in 632ms (View: 622 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-08 17:11:00) [GET]
+Rendering test/index
+Completed in 614ms (View: 601 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-08 17:11:07) [GET]
+Rendering test/index
+Completed in 605ms (View: 595 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-08 17:11:14) [GET]
+Rendering test/index
+Completed in 619ms (View: 609 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-08 17:11:21) [GET]
+Rendering test/index
+Completed in 627ms (View: 616 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-08 17:11:29) [GET]
+Rendering test/index
+Completed in 654ms (View: 643 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-08 17:11:36) [GET]
+Rendering test/index
+Completed in 613ms (View: 601 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-08 17:12:57) [GET]
+Rendering test/index
+Completed in 551ms (View: 540 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-08 17:13:31) [GET]
+Rendering test/index
+Completed in 526ms (View: 515 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-08 18:55:43) [GET]
+Rendering test/index
+Completed in 919ms (View: 864 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-08 18:55:49) [GET]
+Rendering test/index
+Completed in 634ms (View: 621 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-10-08 18:55:52) [GET]
+
+ActionController::RoutingError (No route matches "/foo" with {:method=>:get}):
+  C:\Git\IronRack\jschementi-ironruby-0c8b83a\Merlin\Main\Languages\Ruby\Libraries.LCA_RESTRICTED\Builtins\ProcOps.cs:100:in `[]'
+  C:\Git\IronRack\jschementi-ironruby-0c8b83a\Merlin\Main\Languages\Ruby\Libraries.LCA_RESTRICTED\Thread\RubyMutex.cs:70:in `synchronize'
+  :0:in `lambda_method'
+  C:\Git\IronRack\jschementi-ironruby-0c8b83a\Merlin\Main\Hosts\IronRuby.Rack\RubyEngine.cs:58:in `ExecuteMethod'
+  C:\Git\IronRack\jschementi-ironruby-0c8b83a\Merlin\Main\Hosts\IronRuby.Rack\Application.cs:36:in `Call'
+  C:\Git\IronRack\jschementi-ironruby-0c8b83a\Merlin\Main\Hosts\IronRuby.Rack\IIS.cs:249:in `Handle'
+  C:\Git\IronRack\jschementi-ironruby-0c8b83a\Merlin\Main\Hosts\IronRuby.Rack\HttpHandler.cs:46:in `ProcessRequest'
+  System.Web:0:in `System.Web.HttpApplication.IExecutionStep.Execute'
+  System.Web:0:in `ExecuteStep'
+  System.Web:0:in `ResumeSteps'
+  System.Web:0:in `BeginProcessRequestNotification'
+  System.Web:0:in `ProcessRequestNotificationPrivate'
+  System.Web:0:in `ProcessRequestNotificationHelper'
+  System.Web:0:in `ProcessRequestNotification'
+  System.Web:0:in `MgdIndicateCompletion'
+  System.Web:0:in `ProcessRequestNotificationHelper'
+  System.Web:0:in `ProcessRequestNotification'
+
+Rendering rescues/layout (not_found)
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-08 19:04:02) [GET]
+Rendering test/index
+Completed in 602ms (View: 590 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-10-08 19:04:21) [GET]
+
+ActionController::RoutingError (No route matches "/foo" with {:method=>:get}):
+  C:\Git\IronRack\jschementi-ironruby-0c8b83a\Merlin\Main\Languages\Ruby\Libraries.LCA_RESTRICTED\Builtins\ProcOps.cs:100:in `[]'
+  C:\Git\IronRack\jschementi-ironruby-0c8b83a\Merlin\Main\Languages\Ruby\Libraries.LCA_RESTRICTED\Thread\RubyMutex.cs:70:in `synchronize'
+  :0:in `lambda_method'
+  C:\Git\IronRack\jschementi-ironruby-0c8b83a\Merlin\Main\Hosts\IronRuby.Rack\RubyEngine.cs:58:in `ExecuteMethod'
+  C:\Git\IronRack\jschementi-ironruby-0c8b83a\Merlin\Main\Hosts\IronRuby.Rack\Application.cs:36:in `Call'
+  C:\Git\IronRack\jschementi-ironruby-0c8b83a\Merlin\Main\Hosts\IronRuby.Rack\IIS.cs:249:in `Handle'
+  C:\Git\IronRack\jschementi-ironruby-0c8b83a\Merlin\Main\Hosts\IronRuby.Rack\HttpHandler.cs:46:in `ProcessRequest'
+  System.Web:0:in `System.Web.HttpApplication.IExecutionStep.Execute'
+  System.Web:0:in `ExecuteStep'
+  System.Web:0:in `ResumeSteps'
+  System.Web:0:in `BeginProcessRequestNotification'
+  System.Web:0:in `ProcessRequestNotificationPrivate'
+  System.Web:0:in `ProcessRequestNotificationHelper'
+  System.Web:0:in `ProcessRequestNotification'
+  System.Web:0:in `MgdIndicateCompletion'
+  System.Web:0:in `ProcessRequestNotificationHelper'
+  System.Web:0:in `ProcessRequestNotification'
+
+Rendering rescues/layout (not_found)
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-08 19:04:48) [GET]
+Rendering test/index
+Completed in 640ms (View: 630 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-08 20:50:52) [GET]
+Rendering test/index
+Completed in 927ms (View: 866 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-09 22:18:29) [GET]
+Rendering test/index
+Completed in 989ms (View: 932 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-09 22:20:13) [GET]
+Rendering test/index
+Completed in 615ms (View: 605 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-09 22:20:20) [GET]
+Rendering test/index
+Completed in 618ms (View: 609 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-09 22:20:46) [GET]
+Rendering test/index
+Completed in 608ms (View: 595 | 200 OK [http://localhost/IronRuby.Rails.Example/]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-10-12 18:00:58) [GET]
+
+ActionController::RoutingError (No route matches "/Bracket.Hosting.Samples.IIS/" with {:method=>:get}):
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/recognition_optimisation.rb:66:in `recognize_path'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/route_set.rb:441:in `recognize'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/route_set.rb:436:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:87:in `dispatch'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:121:in `_call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:130:in `build_middleware_stack'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/params_parser.rb:15:in `call'
+  C:\Development\DLR\DLR_Main\Src\Languages\Ruby\IronRuby.Libraries\Builtins\ProcOps.cs:100:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/session/cookie_store.rb:93:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/failsafe.rb:26:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:114:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/reloader.rb:34:in `run'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:108:in `call'
+  C:\Development\DLR\DLR_Main\Src\Languages\Ruby\IronRuby.Libraries\Thread\RubyMutex.cs:92:in `synchronize'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/rails-2.3.4/lib/rails/rack/static.rb:31:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/rails-2.3.4/lib/rails/rack/log_tailer.rb:17:in `call'
+  :0:in `lambda_method'
+  C:\Development\Bracket\Bracket\RubyEngine.cs:70:in `ExecuteMethod'
+  C:\Development\Bracket\Bracket\Rack.cs:31:in `HandleRequest'
+  C:\Development\Bracket\Bracket\Hosting\Iis\IISHttpHandler.cs:23:in `ProcessRequest'
+  System.Web:0:in `System.Web.HttpApplication.IExecutionStep.Execute'
+  System.Web:0:in `ExecuteStep'
+  System.Web:0:in `ResumeSteps'
+  System.Web:0:in `BeginProcessRequestNotification'
+  System.Web:0:in `ProcessRequestNotificationPrivate'
+  System.Web:0:in `ProcessRequestNotificationHelper'
+  System.Web:0:in `ProcessRequestNotification'
+  System.Web:0:in `MgdIndicateCompletion'
+  System.Web:0:in `ProcessRequestNotificationHelper'
+  System.Web:0:in `ProcessRequestNotification'
+
+Rendering rescues/layout (not_found)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-10-12 18:06:23) [GET]
+
+ActionController::RoutingError (No route matches "/Bracket.Hosting.Samples.IIS/" with {:method=>:get}):
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/recognition_optimisation.rb:66:in `recognize_path'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/route_set.rb:441:in `recognize'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/route_set.rb:436:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:87:in `dispatch'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:121:in `_call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:130:in `build_middleware_stack'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/params_parser.rb:15:in `call'
+  C:\Development\DLR\DLR_Main\Src\Languages\Ruby\IronRuby.Libraries\Builtins\ProcOps.cs:100:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/session/cookie_store.rb:93:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/failsafe.rb:26:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:114:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/reloader.rb:34:in `run'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:108:in `call'
+  C:\Development\DLR\DLR_Main\Src\Languages\Ruby\IronRuby.Libraries\Thread\RubyMutex.cs:92:in `synchronize'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/rails-2.3.4/lib/rails/rack/static.rb:31:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/rails-2.3.4/lib/rails/rack/log_tailer.rb:17:in `call'
+  :0:in `lambda_method'
+  C:\Development\Bracket\Bracket\RubyEngine.cs:70:in `ExecuteMethod'
+  C:\Development\Bracket\Bracket\Rack.cs:31:in `HandleRequest'
+  C:\Development\Bracket\Bracket\Hosting\Iis\IISHttpHandler.cs:23:in `ProcessRequest'
+  System.Web:0:in `System.Web.HttpApplication.IExecutionStep.Execute'
+  System.Web:0:in `ExecuteStep'
+  System.Web:0:in `ResumeSteps'
+  System.Web:0:in `BeginProcessRequestNotification'
+  System.Web:0:in `ProcessRequestNotificationPrivate'
+  System.Web:0:in `ProcessRequestNotificationHelper'
+  System.Web:0:in `ProcessRequestNotification'
+  System.Web:0:in `MgdIndicateCompletion'
+  System.Web:0:in `ProcessRequestNotificationHelper'
+  System.Web:0:in `ProcessRequestNotification'
+
+Rendering rescues/layout (not_found)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-10-12 18:07:28) [GET]
+
+ActionController::RoutingError (No route matches "/Bracket.Hosting.Samples.IIS/" with {:method=>:get}):
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/recognition_optimisation.rb:66:in `recognize_path'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/route_set.rb:441:in `recognize'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/route_set.rb:436:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:87:in `dispatch'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:121:in `_call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:130:in `build_middleware_stack'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/params_parser.rb:15:in `call'
+  C:\Development\DLR\DLR_Main\Src\Languages\Ruby\IronRuby.Libraries\Builtins\ProcOps.cs:100:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/session/cookie_store.rb:93:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/failsafe.rb:26:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:114:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/reloader.rb:34:in `run'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:108:in `call'
+  C:\Development\DLR\DLR_Main\Src\Languages\Ruby\IronRuby.Libraries\Thread\RubyMutex.cs:92:in `synchronize'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/rails-2.3.4/lib/rails/rack/static.rb:31:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/rails-2.3.4/lib/rails/rack/log_tailer.rb:17:in `call'
+  :0:in `lambda_method'
+  C:\Development\Bracket\Bracket\RubyEngine.cs:70:in `ExecuteMethod'
+  C:\Development\Bracket\Bracket\Rack.cs:31:in `HandleRequest'
+  C:\Development\Bracket\Bracket\Hosting\Iis\IISHttpHandler.cs:23:in `ProcessRequest'
+  System.Web:0:in `System.Web.HttpApplication.IExecutionStep.Execute'
+  System.Web:0:in `ExecuteStep'
+  System.Web:0:in `ResumeSteps'
+  System.Web:0:in `BeginProcessRequestNotification'
+  System.Web:0:in `ProcessRequestNotificationPrivate'
+  System.Web:0:in `ProcessRequestNotificationHelper'
+  System.Web:0:in `ProcessRequestNotification'
+  System.Web:0:in `MgdIndicateCompletion'
+  System.Web:0:in `ProcessRequestNotificationHelper'
+  System.Web:0:in `ProcessRequestNotification'
+
+Rendering rescues/layout (not_found)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-10-12 18:09:19) [GET]
+
+ActionController::RoutingError (No route matches "/Bracket.Hosting.Samples.IIS/" with {:method=>:get}):
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/recognition_optimisation.rb:66:in `recognize_path'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/route_set.rb:441:in `recognize'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/route_set.rb:436:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:87:in `dispatch'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:121:in `_call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:130:in `build_middleware_stack'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/params_parser.rb:15:in `call'
+  C:\Development\DLR\DLR_Main\Src\Languages\Ruby\IronRuby.Libraries\Builtins\ProcOps.cs:100:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/session/cookie_store.rb:93:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/failsafe.rb:26:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:114:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/reloader.rb:34:in `run'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:108:in `call'
+  C:\Development\DLR\DLR_Main\Src\Languages\Ruby\IronRuby.Libraries\Thread\RubyMutex.cs:92:in `synchronize'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/rails-2.3.4/lib/rails/rack/static.rb:31:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/rails-2.3.4/lib/rails/rack/log_tailer.rb:17:in `call'
+  :0:in `lambda_method'
+  C:\Development\Bracket\Bracket\RubyEngine.cs:70:in `ExecuteMethod'
+  C:\Development\Bracket\Bracket\Rack.cs:31:in `HandleRequest'
+  C:\Development\Bracket\Bracket\Hosting\Iis\IISHttpHandler.cs:23:in `ProcessRequest'
+  System.Web:0:in `System.Web.HttpApplication.IExecutionStep.Execute'
+  System.Web:0:in `ExecuteStep'
+  System.Web:0:in `ResumeSteps'
+  System.Web:0:in `BeginProcessRequestNotification'
+  System.Web:0:in `ProcessRequestNotificationPrivate'
+  System.Web:0:in `ProcessRequestNotificationHelper'
+  System.Web:0:in `ProcessRequestNotification'
+  System.Web:0:in `MgdIndicateCompletion'
+  System.Web:0:in `ProcessRequestNotificationHelper'
+  System.Web:0:in `ProcessRequestNotification'
+
+Rendering rescues/layout (not_found)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-10-12 18:09:34) [GET]
+
+ActionController::RoutingError (No route matches "/Bracket.Hosting.Samples.IIS" with {:method=>:get}):
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/recognition_optimisation.rb:66:in `recognize_path'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/route_set.rb:441:in `recognize'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/route_set.rb:436:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:87:in `dispatch'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:121:in `_call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:130:in `build_middleware_stack'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/params_parser.rb:15:in `call'
+  C:\Development\DLR\DLR_Main\Src\Languages\Ruby\IronRuby.Libraries\Builtins\ProcOps.cs:100:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/session/cookie_store.rb:93:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/failsafe.rb:26:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:114:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/reloader.rb:34:in `run'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:108:in `call'
+  C:\Development\DLR\DLR_Main\Src\Languages\Ruby\IronRuby.Libraries\Thread\RubyMutex.cs:92:in `synchronize'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/rails-2.3.4/lib/rails/rack/static.rb:31:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/rails-2.3.4/lib/rails/rack/log_tailer.rb:17:in `call'
+  :0:in `lambda_method'
+  C:\Development\Bracket\Bracket\RubyEngine.cs:70:in `ExecuteMethod'
+  C:\Development\Bracket\Bracket\Rack.cs:31:in `HandleRequest'
+  C:\Development\Bracket\Bracket\Hosting\Iis\IISHttpHandler.cs:23:in `ProcessRequest'
+  System.Web:0:in `System.Web.HttpApplication.IExecutionStep.Execute'
+  System.Web:0:in `ExecuteStep'
+  System.Web:0:in `ResumeSteps'
+  System.Web:0:in `BeginProcessRequestNotification'
+  System.Web:0:in `ProcessRequestNotificationPrivate'
+  System.Web:0:in `ProcessRequestNotificationHelper'
+  System.Web:0:in `ProcessRequestNotification'
+  System.Web:0:in `MgdIndicateCompletion'
+  System.Web:0:in `ProcessRequestNotificationHelper'
+  System.Web:0:in `ProcessRequestNotification'
+
+Rendering rescues/layout (not_found)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-10-12 18:09:46) [GET]
+
+ActionController::RoutingError (No route matches "/Bracket.Hosting.Samples.IIS/test" with {:method=>:get}):
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/recognition_optimisation.rb:66:in `recognize_path'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/route_set.rb:441:in `recognize'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/routing/route_set.rb:436:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:87:in `dispatch'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:121:in `_call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:130:in `build_middleware_stack'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/params_parser.rb:15:in `call'
+  C:\Development\DLR\DLR_Main\Src\Languages\Ruby\IronRuby.Libraries\Builtins\ProcOps.cs:100:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/session/cookie_store.rb:93:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/failsafe.rb:26:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:114:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/reloader.rb:34:in `run'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/actionpack-2.3.4/lib/action_controller/dispatcher.rb:108:in `call'
+  C:\Development\DLR\DLR_Main\Src\Languages\Ruby\IronRuby.Libraries\Thread\RubyMutex.cs:92:in `synchronize'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/rails-2.3.4/lib/rails/rack/static.rb:31:in `call'
+  C:/IronRuby/lib/ironruby/gems/1.8/gems/rails-2.3.4/lib/rails/rack/log_tailer.rb:17:in `call'
+  :0:in `lambda_method'
+  C:\Development\Bracket\Bracket\RubyEngine.cs:70:in `ExecuteMethod'
+  C:\Development\Bracket\Bracket\Rack.cs:31:in `HandleRequest'
+  C:\Development\Bracket\Bracket\Hosting\Iis\IISHttpHandler.cs:23:in `ProcessRequest'
+  System.Web:0:in `System.Web.HttpApplication.IExecutionStep.Execute'
+  System.Web:0:in `ExecuteStep'
+  System.Web:0:in `ResumeSteps'
+  System.Web:0:in `BeginProcessRequestNotification'
+  System.Web:0:in `ProcessRequestNotificationPrivate'
+  System.Web:0:in `ProcessRequestNotificationHelper'
+  System.Web:0:in `ProcessRequestNotification'
+  System.Web:0:in `MgdIndicateCompletion'
+  System.Web:0:in `ProcessRequestNotificationHelper'
+  System.Web:0:in `ProcessRequestNotification'
+
+Rendering rescues/layout (not_found)
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-12 18:13:22) [GET]
+Rendering test/index
+Completed in 974ms (View: 916 | 200 OK [http://localhost/Bracket.Hosting.Samples.IIS/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-12 18:13:33) [GET]
+Rendering test/index
+Completed in 623ms (View: 611 | 200 OK [http://localhost/Bracket.Hosting.Samples.IIS/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-12 18:13:41) [GET]
+Rendering test/index
+Completed in 49ms (View: 38 | 200 OK [http://localhost/Bracket.Hosting.Samples.IIS/]
+
+
+Processing TestController#index (for 127.0.0.1 at 2009-10-12 18:13:44) [GET]
+Rendering test/index
+Completed in 47ms (View: 36 | 200 OK [http://localhost/Bracket.Hosting.Samples.IIS/]

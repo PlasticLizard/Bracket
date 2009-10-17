@@ -1,7 +1,6 @@
 *.csproj.vspscc
 *.csproj.user
 *.vssscc
-*.log
 bin
 obj
 *.proj
