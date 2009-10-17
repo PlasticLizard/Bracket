@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Net;
 using System.Windows.Forms;
+using Bracket.Events;
 using Bracket.Hosting.HttpServer;
 using Bracket.Hosting.Kayak;
 using Bracket.Hosting.SystemWeb;
@@ -20,7 +21,9 @@ namespace Bracket.Hosting.Samples.Embedded
         public MainForm()
         {
             InitializeComponent();
-            _logWriter = new TextBoxLogWriter(this.txtOutput);
+            _logWriter = new TextBoxLogWriter(txtOutput);
+            //BracketEvent.LogAllEvents = true;
+            //BracketEvent.Event += BracketEvent_Event;
         }
 
         private void btnStartServer_Click(object sender, EventArgs e)
@@ -125,6 +128,11 @@ namespace Bracket.Hosting.Samples.Embedded
         {
             if (!String.IsNullOrEmpty(txtUrl.Text))
             Process.Start(txtUrl.Text);
+        }
+
+        void BracketEvent_Event(object sender, BracketEvent e)
+        {
+            _logWriter.Write(this, LogPrio.Info, e.ToString());
         }
     }
 }

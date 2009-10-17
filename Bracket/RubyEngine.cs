@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Bracket.Hosting;
 using IronRuby;
 using IronRuby.Runtime;
 using Microsoft.Scripting.Hosting;
@@ -12,7 +13,12 @@ namespace Bracket
 
         public RubyEngine()
         {
-            ScriptEngine = Ruby.CreateEngine();
+            ScriptRuntimeSetup rts = ScriptRuntimeSetup.ReadConfiguration();
+            
+            rts.HostType = typeof (BracketScriptHost);
+            rts.AddRubySetup();
+            ScriptRuntime runtime = Ruby.CreateRuntime(rts);
+            ScriptEngine = Ruby.GetEngine(runtime);
             _globalScope = ScriptEngine.CreateScope();
         }
 

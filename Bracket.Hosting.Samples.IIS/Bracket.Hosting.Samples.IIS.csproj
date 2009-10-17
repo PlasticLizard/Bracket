@@ -92,6 +92,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="IronRuby.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Rails\app\controllers\application_controller.rb" />
     <None Include="Rails\app\controllers\test_controller.rb" />
     <None Include="Rails\app\helpers\application_helper.rb" />

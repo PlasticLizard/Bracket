@@ -20,7 +20,8 @@ namespace Bracket.Hosting.Samples.Embedded
         {
             if (!_textBox.InvokeRequired && !_textBox.IsDisposed)
             {
-                _textBox.AppendText(String.Format("{0}:{1} on {2}" + Environment.NewLine, DateTime.Now, message, source ?? "<null>"));
+                _textBox.AppendText(".");
+                //_textBox.AppendText(String.Format("{0}:{1} on {2}" + Environment.NewLine, DateTime.Now, message, source ?? "<null>"));
             }
             else
             {
