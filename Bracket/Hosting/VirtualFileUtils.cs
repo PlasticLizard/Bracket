@@ -13,7 +13,7 @@ namespace Bracket.Hosting
         private static readonly Regex PathSeparatorRegex = new Regex(@".*(\\|/)+.*",
                                                                     RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        private static readonly Regex ZipRootRegex = new Regex(@"(([a-z]:(\\|/)|~))?(\w|\s|\\|/|\.|\$)*?(\.zip)(?=$|\\|/)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex ZipRootRegex = new Regex(@"(([a-z]:(\\|/)|~))?(\w|\s|\\|/|\.|\$|-)*?(\.zip)(?=$|\\|/)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public static string ZipFileAtRoot(string path)
         {
