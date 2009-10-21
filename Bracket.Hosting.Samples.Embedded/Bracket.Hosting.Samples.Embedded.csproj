@@ -39,6 +39,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalDependencies\Ionic.Zip.Reduced.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ServiceBus, Version=0.16.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -240,6 +241,10 @@
     <Compile Include="TextBoxLogWriter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bracket.Hosting.Azure.ServiceBus\Bracket.Hosting.Azure.ServiceBus.csproj">
+      <Project>{07317D18-179E-4A50-99AF-F4380AB4BC92}</Project>
+      <Name>Bracket.Hosting.Azure.ServiceBus</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Bracket.Hosting.Kayak\Bracket.Hosting.Kayak.csproj">
       <Project>{F47EB73F-1C74-4B34-8854-983BDBCE1C90}</Project>
       <Name>Bracket.Hosting.Kayak</Name>

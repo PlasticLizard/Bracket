@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.grpServerLib = new System.Windows.Forms.GroupBox();
+            this.radAzure = new System.Windows.Forms.RadioButton();
             this.radKayak = new System.Windows.Forms.RadioButton();
             this.radFramework = new System.Windows.Forms.RadioButton();
             this.radBracket = new System.Windows.Forms.RadioButton();
@@ -38,6 +39,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtUrl = new System.Windows.Forms.TextBox();
             this.btnBrowserNavigate = new System.Windows.Forms.Button();
+            this.btnOpenInBrowser = new System.Windows.Forms.Button();
             this.grpOutput = new System.Windows.Forms.GroupBox();
             this.txtOutput = new System.Windows.Forms.TextBox();
             this.btnStopServer = new System.Windows.Forms.Button();
@@ -45,25 +47,45 @@
             this.radRails = new System.Windows.Forms.RadioButton();
             this.radSinatraApp = new System.Windows.Forms.RadioButton();
             this.radRackApp = new System.Windows.Forms.RadioButton();
-            this.btnOpenInBrowser = new System.Windows.Forms.Button();
+            this.grpAzureSettings = new System.Windows.Forms.GroupBox();
+            this.txtSlnName = new System.Windows.Forms.TextBox();
+            this.txtSlnPassword = new System.Windows.Forms.TextBox();
+            this.txtUrlNamespace = new System.Windows.Forms.TextBox();
+            this.chkUseSsl = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.grpServerLib.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.grpOutput.SuspendLayout();
             this.grpApplicationType.SuspendLayout();
+            this.grpAzureSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpServerLib
             // 
+            this.grpServerLib.Controls.Add(this.radAzure);
             this.grpServerLib.Controls.Add(this.radKayak);
             this.grpServerLib.Controls.Add(this.radFramework);
             this.grpServerLib.Controls.Add(this.radBracket);
             this.grpServerLib.Location = new System.Drawing.Point(12, 12);
             this.grpServerLib.Name = "grpServerLib";
-            this.grpServerLib.Size = new System.Drawing.Size(173, 91);
+            this.grpServerLib.Size = new System.Drawing.Size(218, 120);
             this.grpServerLib.TabIndex = 0;
             this.grpServerLib.TabStop = false;
-            this.grpServerLib.Text = "Server Library";
+            this.grpServerLib.Text = "Hosting Library";
+            // 
+            // radAzure
+            // 
+            this.radAzure.AutoSize = true;
+            this.radAzure.Location = new System.Drawing.Point(6, 88);
+            this.radAzure.Name = "radAzure";
+            this.radAzure.Size = new System.Drawing.Size(112, 17);
+            this.radAzure.TabIndex = 0;
+            this.radAzure.Text = "Azure Service Bus";
+            this.radAzure.UseVisualStyleBackColor = true;
+            this.radAzure.CheckedChanged += new System.EventHandler(this.radAzure_CheckedChanged);
             // 
             // radKayak
             // 
@@ -99,9 +121,9 @@
             // 
             // btnStartServer
             // 
-            this.btnStartServer.Location = new System.Drawing.Point(12, 206);
+            this.btnStartServer.Location = new System.Drawing.Point(12, 235);
             this.btnStartServer.Name = "btnStartServer";
-            this.btnStartServer.Size = new System.Drawing.Size(170, 23);
+            this.btnStartServer.Size = new System.Drawing.Size(218, 23);
             this.btnStartServer.TabIndex = 1;
             this.btnStartServer.Text = "Rackup!";
             this.btnStartServer.UseVisualStyleBackColor = true;
@@ -111,9 +133,9 @@
             // 
             this.groupBox2.Controls.Add(this.webBrowser);
             this.groupBox2.Controls.Add(this.panel1);
-            this.groupBox2.Location = new System.Drawing.Point(191, 12);
+            this.groupBox2.Location = new System.Drawing.Point(236, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(753, 366);
+            this.groupBox2.Size = new System.Drawing.Size(708, 366);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Web Browser";
@@ -125,7 +147,7 @@
             this.webBrowser.Margin = new System.Windows.Forms.Padding(5);
             this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(747, 327);
+            this.webBrowser.Size = new System.Drawing.Size(702, 327);
             this.webBrowser.TabIndex = 0;
             // 
             // panel1
@@ -136,7 +158,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(3, 16);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(747, 20);
+            this.panel1.Size = new System.Drawing.Size(702, 20);
             this.panel1.TabIndex = 1;
             // 
             // txtUrl
@@ -144,14 +166,14 @@
             this.txtUrl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtUrl.Location = new System.Drawing.Point(0, 0);
             this.txtUrl.Name = "txtUrl";
-            this.txtUrl.Size = new System.Drawing.Size(576, 20);
+            this.txtUrl.Size = new System.Drawing.Size(531, 20);
             this.txtUrl.TabIndex = 0;
             this.txtUrl.Text = "http://localhost:9876";
             // 
             // btnBrowserNavigate
             // 
             this.btnBrowserNavigate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnBrowserNavigate.Location = new System.Drawing.Point(576, 0);
+            this.btnBrowserNavigate.Location = new System.Drawing.Point(531, 0);
             this.btnBrowserNavigate.Name = "btnBrowserNavigate";
             this.btnBrowserNavigate.Size = new System.Drawing.Size(75, 20);
             this.btnBrowserNavigate.TabIndex = 1;
@@ -159,12 +181,23 @@
             this.btnBrowserNavigate.UseVisualStyleBackColor = true;
             this.btnBrowserNavigate.Click += new System.EventHandler(this.btnBrowserNavigate_Click);
             // 
+            // btnOpenInBrowser
+            // 
+            this.btnOpenInBrowser.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOpenInBrowser.Location = new System.Drawing.Point(606, 0);
+            this.btnOpenInBrowser.Name = "btnOpenInBrowser";
+            this.btnOpenInBrowser.Size = new System.Drawing.Size(96, 20);
+            this.btnOpenInBrowser.TabIndex = 2;
+            this.btnOpenInBrowser.Text = "Launch Browser";
+            this.btnOpenInBrowser.UseVisualStyleBackColor = true;
+            this.btnOpenInBrowser.Click += new System.EventHandler(this.btnOpenInBrowser_Click);
+            // 
             // grpOutput
             // 
             this.grpOutput.Controls.Add(this.txtOutput);
-            this.grpOutput.Location = new System.Drawing.Point(191, 382);
+            this.grpOutput.Location = new System.Drawing.Point(236, 382);
             this.grpOutput.Name = "grpOutput";
-            this.grpOutput.Size = new System.Drawing.Size(753, 158);
+            this.grpOutput.Size = new System.Drawing.Size(708, 158);
             this.grpOutput.TabIndex = 3;
             this.grpOutput.TabStop = false;
             this.grpOutput.Text = "Output";
@@ -175,15 +208,15 @@
             this.txtOutput.Location = new System.Drawing.Point(3, 16);
             this.txtOutput.Multiline = true;
             this.txtOutput.Name = "txtOutput";
-            this.txtOutput.Size = new System.Drawing.Size(747, 139);
+            this.txtOutput.Size = new System.Drawing.Size(702, 139);
             this.txtOutput.TabIndex = 0;
             // 
             // btnStopServer
             // 
             this.btnStopServer.Enabled = false;
-            this.btnStopServer.Location = new System.Drawing.Point(12, 235);
+            this.btnStopServer.Location = new System.Drawing.Point(12, 264);
             this.btnStopServer.Name = "btnStopServer";
-            this.btnStopServer.Size = new System.Drawing.Size(170, 23);
+            this.btnStopServer.Size = new System.Drawing.Size(218, 23);
             this.btnStopServer.TabIndex = 1;
             this.btnStopServer.Text = "Stop Server";
             this.btnStopServer.UseVisualStyleBackColor = true;
@@ -194,12 +227,12 @@
             this.grpApplicationType.Controls.Add(this.radRails);
             this.grpApplicationType.Controls.Add(this.radSinatraApp);
             this.grpApplicationType.Controls.Add(this.radRackApp);
-            this.grpApplicationType.Location = new System.Drawing.Point(12, 109);
+            this.grpApplicationType.Location = new System.Drawing.Point(12, 138);
             this.grpApplicationType.Name = "grpApplicationType";
-            this.grpApplicationType.Size = new System.Drawing.Size(170, 91);
+            this.grpApplicationType.Size = new System.Drawing.Size(218, 91);
             this.grpApplicationType.TabIndex = 4;
             this.grpApplicationType.TabStop = false;
-            this.grpApplicationType.Text = "Application";
+            this.grpApplicationType.Text = "Rack Flavor";
             // 
             // radRails
             // 
@@ -233,22 +266,90 @@
             this.radRackApp.Text = "Generic Rack Application";
             this.radRackApp.UseVisualStyleBackColor = true;
             // 
-            // btnOpenInBrowser
+            // grpAzureSettings
             // 
-            this.btnOpenInBrowser.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOpenInBrowser.Location = new System.Drawing.Point(651, 0);
-            this.btnOpenInBrowser.Name = "btnOpenInBrowser";
-            this.btnOpenInBrowser.Size = new System.Drawing.Size(96, 20);
-            this.btnOpenInBrowser.TabIndex = 2;
-            this.btnOpenInBrowser.Text = "Launch Browser";
-            this.btnOpenInBrowser.UseVisualStyleBackColor = true;
-            this.btnOpenInBrowser.Click += new System.EventHandler(this.btnOpenInBrowser_Click);
+            this.grpAzureSettings.Controls.Add(this.txtUrlNamespace);
+            this.grpAzureSettings.Controls.Add(this.label3);
+            this.grpAzureSettings.Controls.Add(this.label2);
+            this.grpAzureSettings.Controls.Add(this.label1);
+            this.grpAzureSettings.Controls.Add(this.chkUseSsl);
+            this.grpAzureSettings.Controls.Add(this.txtSlnPassword);
+            this.grpAzureSettings.Controls.Add(this.txtSlnName);
+            this.grpAzureSettings.Enabled = false;
+            this.grpAzureSettings.Location = new System.Drawing.Point(12, 382);
+            this.grpAzureSettings.Name = "grpAzureSettings";
+            this.grpAzureSettings.Size = new System.Drawing.Size(218, 155);
+            this.grpAzureSettings.TabIndex = 5;
+            this.grpAzureSettings.TabStop = false;
+            this.grpAzureSettings.Text = "Azure Service Bus Settings";
+            // 
+            // txtSlnName
+            // 
+            this.txtSlnName.Location = new System.Drawing.Point(84, 19);
+            this.txtSlnName.Name = "txtSlnName";
+            this.txtSlnName.Size = new System.Drawing.Size(128, 20);
+            this.txtSlnName.TabIndex = 0;
+            this.txtSlnName.Text = "MyServiceBus";
+            // 
+            // txtSlnPassword
+            // 
+            this.txtSlnPassword.Location = new System.Drawing.Point(84, 45);
+            this.txtSlnPassword.Name = "txtSlnPassword";
+            this.txtSlnPassword.Size = new System.Drawing.Size(128, 20);
+            this.txtSlnPassword.TabIndex = 0;
+            this.txtSlnPassword.Text = "MyPassword";
+            // 
+            // txtUrlNamespace
+            // 
+            this.txtUrlNamespace.Location = new System.Drawing.Point(84, 71);
+            this.txtUrlNamespace.Name = "txtUrlNamespace";
+            this.txtUrlNamespace.Size = new System.Drawing.Size(128, 20);
+            this.txtUrlNamespace.TabIndex = 0;
+            this.txtUrlNamespace.Text = "Bracket";
+            // 
+            // chkUseSsl
+            // 
+            this.chkUseSsl.AutoSize = true;
+            this.chkUseSsl.Location = new System.Drawing.Point(84, 97);
+            this.chkUseSsl.Name = "chkUseSsl";
+            this.chkUseSsl.Size = new System.Drawing.Size(68, 17);
+            this.chkUseSsl.TabIndex = 1;
+            this.chkUseSsl.Text = "Use SSL";
+            this.chkUseSsl.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(79, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Solution Name:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 48);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(72, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Solution Pwd:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 74);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(71, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Service Path:";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(956, 552);
+            this.Controls.Add(this.grpAzureSettings);
             this.Controls.Add(this.grpApplicationType);
             this.Controls.Add(this.grpOutput);
             this.Controls.Add(this.groupBox2);
@@ -266,6 +367,8 @@
             this.grpOutput.PerformLayout();
             this.grpApplicationType.ResumeLayout(false);
             this.grpApplicationType.PerformLayout();
+            this.grpAzureSettings.ResumeLayout(false);
+            this.grpAzureSettings.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -290,6 +393,15 @@
         private System.Windows.Forms.RadioButton radRackApp;
         private System.Windows.Forms.RadioButton radRails;
         private System.Windows.Forms.Button btnOpenInBrowser;
+        private System.Windows.Forms.RadioButton radAzure;
+        private System.Windows.Forms.GroupBox grpAzureSettings;
+        private System.Windows.Forms.CheckBox chkUseSsl;
+        private System.Windows.Forms.TextBox txtUrlNamespace;
+        private System.Windows.Forms.TextBox txtSlnPassword;
+        private System.Windows.Forms.TextBox txtSlnName;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
     }
 }
 

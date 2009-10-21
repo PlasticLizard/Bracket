@@ -44,12 +44,7 @@ namespace Bracket.Hosting.HttpServer
 
         public void Start(RubyEnvironment rubyEnvironment, int tcpBacklog)
         {
-            if (rubyEnvironment == null)
-                _rack = new Rack();
-            else
-            {
-                _rack = new Rack(rubyEnvironment);
-            }
+            _rack = rubyEnvironment == null ? new Rack() : new Rack(rubyEnvironment);
 
             _server.Start(tcpBacklog);
         }

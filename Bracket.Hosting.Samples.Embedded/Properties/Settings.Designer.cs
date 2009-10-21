@@ -8,22 +8,66 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Bracket.Hosting.Samples.Embedded.Properties
-{
-
-
+namespace Bracket.Hosting.Samples.Embedded.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "9.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
-        public static Settings Default
-        {
-            get
-            {
+        
+        public static Settings Default {
+            get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MySolution")]
+        public string AzureServiceBusSolutionName {
+            get {
+                return ((string)(this["AzureServiceBusSolutionName"]));
+            }
+            set {
+                this["AzureServiceBusSolutionName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MyPassword")]
+        public string AzureServiceBusSolutionPassword {
+            get {
+                return ((string)(this["AzureServiceBusSolutionPassword"]));
+            }
+            set {
+                this["AzureServiceBusSolutionPassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Bracket")]
+        public string AzureServiceBusUrlNamespace {
+            get {
+                return ((string)(this["AzureServiceBusUrlNamespace"]));
+            }
+            set {
+                this["AzureServiceBusUrlNamespace"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AzureServiceBusUseSSL {
+            get {
+                return ((bool)(this["AzureServiceBusUseSSL"]));
+            }
+            set {
+                this["AzureServiceBusUseSSL"] = value;
             }
         }
     }

@@ -3,10 +3,13 @@ using System.Diagnostics;
 using System.Net;
 using System.Windows.Forms;
 using Bracket.Events;
+using Bracket.Hosting.Azure.ServiceBus;
 using Bracket.Hosting.HttpServer;
 using Bracket.Hosting.Kayak;
+using Bracket.Hosting.Samples.Embedded.Properties;
 using Bracket.Hosting.SystemWeb;
 using HttpServer;
+using Microsoft.ServiceBus;
 
 namespace Bracket.Hosting.Samples.Embedded
 {
@@ -15,6 +18,7 @@ namespace Bracket.Hosting.Samples.Embedded
         private DefaultRackServer _bracketServer;
         private HttpListenerRackServer _frameworkServer;
         private KayakRackServer _kayakServer;
+        private RackServiceHost _azureServer;
 
         private readonly TextBoxLogWriter _logWriter;
 
@@ -22,6 +26,12 @@ namespace Bracket.Hosting.Samples.Embedded
         {
             InitializeComponent();
             _logWriter = new TextBoxLogWriter(txtOutput);
+
+            txtSlnName.Text = Settings.Default.AzureServiceBusSolutionName;
+            txtSlnPassword.Text = Settings.Default.AzureServiceBusSolutionPassword;
+            txtUrlNamespace.Text = Settings.Default.AzureServiceBusUrlNamespace;
+            chkUseSsl.Checked = Settings.Default.AzureServiceBusUseSSL;
+
             //BracketEvent.LogAllEvents = true;
             //BracketEvent.Event += BracketEvent_Event;
         }
@@ -46,6 +56,15 @@ namespace Bracket.Hosting.Samples.Embedded
                _kayakServer = new KayakRackServer(9876);
                _kayakServer.Start(new RubyEnvironment((env) => env.ApplicationRootPath = appName));
            }
+           else if (radAzure.Checked)
+           {
+               _azureServer = new RackServiceHost(txtSlnName.Text, txtSlnPassword.Text, txtUrlNamespace.Text,
+                                                  chkUseSsl.Checked);
+               _azureServer.Start(new RubyEnvironment((env) => env.ApplicationRootPath = appName));
+
+               txtUrl.Text = ServiceBusEnvironment.CreateServiceUri(chkUseSsl.Checked ? "https" : "http",
+                                                                    txtSlnName.Text, txtUrlNamespace.Text).ToString();
+           }
 
             _logWriter.Write(this, LogPrio.Info, SelectedFrameworkName + " Started!");
 
@@ -55,6 +74,7 @@ namespace Bracket.Hosting.Samples.Embedded
             grpApplicationType.Enabled = false;
             btnStartServer.Enabled = false;
             btnStopServer.Enabled = true;
+            grpAzureSettings.Enabled = false;
 
         }
 
@@ -83,6 +103,13 @@ namespace Bracket.Hosting.Samples.Embedded
                     _kayakServer.Dispose();
                 _kayakServer = null;
             }
+            else if (radAzure.Checked)
+            {
+                if(_azureServer != null)
+                    _azureServer.Dispose();
+                _azureServer = null;
+                grpAzureSettings.Enabled = true;
+            }
 
             _logWriter.Write(this, LogPrio.Info,SelectedFrameworkName + " Stopped.");
 
@@ -90,6 +117,7 @@ namespace Bracket.Hosting.Samples.Embedded
             grpApplicationType.Enabled = true;
             btnStartServer.Enabled = true;
             btnStopServer.Enabled = false;
+            
 
         }
 
@@ -121,6 +149,14 @@ namespace Bracket.Hosting.Samples.Embedded
                 _frameworkServer.Dispose();
             if(_kayakServer != null)
                 _kayakServer.Dispose();
+            if (_azureServer != null)
+                _azureServer.Dispose();
+
+            Settings.Default.AzureServiceBusSolutionName = txtSlnName.Text;
+            Settings.Default.AzureServiceBusSolutionPassword = txtSlnPassword.Text;
+            Settings.Default.AzureServiceBusUrlNamespace = txtUrlNamespace.Text;
+            Settings.Default.AzureServiceBusUseSSL = chkUseSsl.Checked;
+            Settings.Default.Save();
 
         }
 
@@ -133,6 +169,11 @@ namespace Bracket.Hosting.Samples.Embedded
         void BracketEvent_Event(object sender, BracketEvent e)
         {
             _logWriter.Write(this, LogPrio.Info, e.ToString());
+        }
+
+        private void radAzure_CheckedChanged(object sender, EventArgs e)
+        {
+            grpAzureSettings.Enabled = radAzure.Checked;
         }
     }
 }

@@ -1,7 +1,18 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Bracket.Hosting.Samples.Embedded.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="AzureServiceBusSolutionName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MySolution</Value>
+    </Setting>
+    <Setting Name="AzureServiceBusSolutionPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MyPassword</Value>
+    </Setting>
+    <Setting Name="AzureServiceBusUrlNamespace" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bracket</Value>
+    </Setting>
+    <Setting Name="AzureServiceBusUseSSL" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

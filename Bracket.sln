@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bracket.Hosting.Samples.IIS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bracket.Tests", "Bracket.Tests\Bracket.Tests.csproj", "{24A79B93-7562-4286-A3FE-01EF2F5EFEF9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bracket.Hosting.Azure.ServiceBus", "Bracket.Hosting.Azure.ServiceBus\Bracket.Hosting.Azure.ServiceBus.csproj", "{07317D18-179E-4A50-99AF-F4380AB4BC92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{24A79B93-7562-4286-A3FE-01EF2F5EFEF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24A79B93-7562-4286-A3FE-01EF2F5EFEF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24A79B93-7562-4286-A3FE-01EF2F5EFEF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07317D18-179E-4A50-99AF-F4380AB4BC92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07317D18-179E-4A50-99AF-F4380AB4BC92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07317D18-179E-4A50-99AF-F4380AB4BC92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07317D18-179E-4A50-99AF-F4380AB4BC92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
