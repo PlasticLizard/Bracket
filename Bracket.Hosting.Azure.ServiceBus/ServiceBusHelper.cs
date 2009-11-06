@@ -9,11 +9,11 @@ namespace Bracket.Hosting.Azure.ServiceBus
             var userNamePasswordServiceBusCredential = new TransportClientEndpointBehavior
             {
                 CredentialType =
-                    TransportClientCredentialType
-                    .UserNamePassword
+                    TransportClientCredentialType.SharedSecret
+                    
             };
-            userNamePasswordServiceBusCredential.Credentials.UserName.UserName = userName;
-            userNamePasswordServiceBusCredential.Credentials.UserName.Password = password;
+            userNamePasswordServiceBusCredential.Credentials.SharedSecret.IssuerName = userName;
+            userNamePasswordServiceBusCredential.Credentials.SharedSecret.IssuerSecret = password;
             return userNamePasswordServiceBusCredential;
         }
     }

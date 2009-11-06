@@ -23,10 +23,10 @@ namespace Bracket.Hosting.Azure.ServiceBus
         IChannelListener<IReplyChannel> _listener;
         private Rack _rack;
 
-        public RackServiceHost(string solutionName,string solutionPassword,string urlNamespace,bool useSsl)
+        public RackServiceHost(string serviceNamespace,string issuerName,string issuerSecret,string servicePath,bool useSsl)
             : this(
-                ServiceBusEnvironment.CreateServiceUri("http" + (useSsl ? "s" : ""), solutionName, urlNamespace),
-                ServiceBusHelper.CreateUsernamePasswordCredential(solutionName, solutionPassword))
+                ServiceBusEnvironment.CreateServiceUri("http" + (useSsl ? "s" : ""), serviceNamespace, servicePath),
+                ServiceBusHelper.CreateUsernamePasswordCredential(issuerName, issuerSecret))
         {
         }
 
@@ -55,6 +55,7 @@ namespace Bracket.Hosting.Azure.ServiceBus
 
             _credentials = credentials;
         }
+
 
         public void Start(RubyEnvironment rubyEnvironment)
         {

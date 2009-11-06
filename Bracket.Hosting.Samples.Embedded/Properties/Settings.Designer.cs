@@ -25,37 +25,37 @@ namespace Bracket.Hosting.Samples.Embedded.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MySolution")]
-        public string AzureServiceBusSolutionName {
+        [global::System.Configuration.DefaultSettingValueAttribute("My Service")]
+        public string AzureServiceBusServiceNamespace {
             get {
-                return ((string)(this["AzureServiceBusSolutionName"]));
+                return ((string)(this["AzureServiceBusServiceNamespace"]));
             }
             set {
-                this["AzureServiceBusSolutionName"] = value;
+                this["AzureServiceBusServiceNamespace"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MyPassword")]
-        public string AzureServiceBusSolutionPassword {
+        [global::System.Configuration.DefaultSettingValueAttribute("My Secret")]
+        public string AzureServiceBusIssuerSecret {
             get {
-                return ((string)(this["AzureServiceBusSolutionPassword"]));
+                return ((string)(this["AzureServiceBusIssuerSecret"]));
             }
             set {
-                this["AzureServiceBusSolutionPassword"] = value;
+                this["AzureServiceBusIssuerSecret"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Bracket")]
-        public string AzureServiceBusUrlNamespace {
+        public string AzureServiceBusServicePath {
             get {
-                return ((string)(this["AzureServiceBusUrlNamespace"]));
+                return ((string)(this["AzureServiceBusServicePath"]));
             }
             set {
-                this["AzureServiceBusUrlNamespace"] = value;
+                this["AzureServiceBusServicePath"] = value;
             }
         }
         
@@ -68,6 +68,18 @@ namespace Bracket.Hosting.Samples.Embedded.Properties {
             }
             set {
                 this["AzureServiceBusUseSSL"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("owner")]
+        public string AzureServiceBusIssuerName {
+            get {
+                return ((string)(this["AzureServiceBusIssuerName"]));
+            }
+            set {
+                this["AzureServiceBusIssuerName"] = value;
             }
         }
     }

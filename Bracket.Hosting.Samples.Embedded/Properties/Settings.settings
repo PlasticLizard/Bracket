@@ -2,17 +2,20 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Bracket.Hosting.Samples.Embedded.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="AzureServiceBusSolutionName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MySolution</Value>
+    <Setting Name="AzureServiceBusServiceNamespace" Type="System.String" Scope="User">
+      <Value Profile="(Default)">My Service</Value>
     </Setting>
-    <Setting Name="AzureServiceBusSolutionPassword" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MyPassword</Value>
+    <Setting Name="AzureServiceBusIssuerSecret" Type="System.String" Scope="User">
+      <Value Profile="(Default)">My Secret</Value>
     </Setting>
-    <Setting Name="AzureServiceBusUrlNamespace" Type="System.String" Scope="User">
+    <Setting Name="AzureServiceBusServicePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">Bracket</Value>
     </Setting>
     <Setting Name="AzureServiceBusUseSSL" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AzureServiceBusIssuerName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">owner</Value>
     </Setting>
   </Settings>
 </SettingsFile>

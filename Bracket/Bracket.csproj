@@ -31,7 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HttpServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="HttpServer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d7063c47c583695a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalDependencies\HttpServer.dll</HintPath>
     </Reference>
@@ -80,8 +80,9 @@
     <Compile Include="Events\IBracketEventLogger.cs" />
     <Compile Include="Hosting\BracketPlatformAdaptationLayer.cs" />
     <Compile Include="Hosting\BracketScriptHost.cs" />
-    <Compile Include="Hosting\HttpServer\HttpServerHelper.cs" />
-    <Compile Include="Hosting\HttpServer\DefaultRackServer.cs" />
+    <Compile Include="Hosting\Default\HttpServerHelper.cs" />
+    <Compile Include="Hosting\Default\DefaultRackServer.cs" />
+    <Compile Include="Hosting\Default\RackRequestHandler.cs" />
     <Compile Include="Hosting\IVirtualDirectory.cs" />
     <Compile Include="Hosting\VirtualFileUtils.cs" />
     <Compile Include="Hosting\ZipArchiveDirectory.cs" />

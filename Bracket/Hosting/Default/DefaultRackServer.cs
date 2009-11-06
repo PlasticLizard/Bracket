@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Net;
 using HttpServer;
-using HttpListener=HttpServer.HttpListener;
+using HttpServer.HttpModules;
 
-namespace Bracket.Hosting.HttpServer
+
+namespace Bracket.Hosting.Default
 {
     public class DefaultRackServer : IDisposable
     {
-        private HttpListener _server;
+        private HttpServer.HttpServer _server;
         private Rack _rack;
+        private readonly IPAddress _ipAddress;
+        private readonly int _port;
+        private readonly ILogWriter _logWriter;
 
         public DefaultRackServer(int port):this(port,IPAddress.Any)
         {}
@@ -18,8 +22,10 @@ namespace Bracket.Hosting.HttpServer
 
         public DefaultRackServer(int port,IPAddress ipAddress,ILogWriter logWriter)
         {
-            _server = HttpListener.Create(logWriter, ipAddress, port);
-            _server.AddHandler(null,null,null,true,ProcessRequest);
+            _server = new HttpServer.HttpServer(logWriter);
+            _ipAddress = ipAddress;
+            _port = port;
+            _logWriter = logWriter;
         }
 
         public void Start()
@@ -45,8 +51,8 @@ namespace Bracket.Hosting.HttpServer
         public void Start(RubyEnvironment rubyEnvironment, int tcpBacklog)
         {
             _rack = rubyEnvironment == null ? new Rack() : new Rack(rubyEnvironment);
-
-            _server.Start(tcpBacklog);
+            _server.Add(new RackRequestHandler(_logWriter, _rack));
+            _server.Start(_ipAddress, _port);
         }
 
         public void Stop()
@@ -61,23 +67,6 @@ namespace Bracket.Hosting.HttpServer
         {
             Stop();
             _server = null;
-        }
-
-        private void ProcessRequest(IHttpClientContext context, IHttpRequest request, IHttpResponse response)
-        {
-            _server.LogWriter.Write(this,LogPrio.Trace,String.Format("Begin handling Rack request for {0}",request.Uri));
-            
-            var rackRequest = request.ToRackRequest();
-            var rackResponse = new RackResponse(response.Body);
-
-            //this will write to the body. We may want to set headers first, so may need some thought.
-            _rack.HandleRequest(rackRequest, rackResponse);
-
-            response.Status = (HttpStatusCode)rackResponse.Status;
-            foreach (var header in rackResponse.Headers)
-                response.AddHeader(header.Key, header.Value);
-
-            _server.LogWriter.Write(this, LogPrio.Trace, String.Format("Finished handling Rack request for {0}", request.Uri));
         }
     }
 }

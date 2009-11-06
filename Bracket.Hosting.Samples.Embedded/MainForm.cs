@@ -4,7 +4,7 @@ using System.Net;
 using System.Windows.Forms;
 using Bracket.Events;
 using Bracket.Hosting.Azure.ServiceBus;
-using Bracket.Hosting.HttpServer;
+using Bracket.Hosting.Default;
 using Bracket.Hosting.Kayak;
 using Bracket.Hosting.Samples.Embedded.Properties;
 using Bracket.Hosting.SystemWeb;
@@ -27,10 +27,11 @@ namespace Bracket.Hosting.Samples.Embedded
             InitializeComponent();
             _logWriter = new TextBoxLogWriter(txtOutput);
 
-            txtSlnName.Text = Settings.Default.AzureServiceBusSolutionName;
-            txtSlnPassword.Text = Settings.Default.AzureServiceBusSolutionPassword;
-            txtUrlNamespace.Text = Settings.Default.AzureServiceBusUrlNamespace;
+            txtSlnName.Text = Settings.Default.AzureServiceBusServiceNamespace;
+            txtSlnPassword.Text = Settings.Default.AzureServiceBusIssuerSecret;
+            txtUrlNamespace.Text = Settings.Default.AzureServiceBusServicePath;
             chkUseSsl.Checked = Settings.Default.AzureServiceBusUseSSL;
+            txtIssuerName.Text = Settings.Default.AzureServiceBusIssuerName;
 
             //BracketEvent.LogAllEvents = true;
             //BracketEvent.Event += BracketEvent_Event;
@@ -58,7 +59,7 @@ namespace Bracket.Hosting.Samples.Embedded
            }
            else if (radAzure.Checked)
            {
-               _azureServer = new RackServiceHost(txtSlnName.Text, txtSlnPassword.Text, txtUrlNamespace.Text,
+               _azureServer = new RackServiceHost(txtSlnName.Text, txtIssuerName.Text, txtSlnPassword.Text, txtUrlNamespace.Text,
                                                   chkUseSsl.Checked);
                _azureServer.Start(new RubyEnvironment((env) => env.ApplicationRootPath = appName));
 
@@ -152,10 +153,11 @@ namespace Bracket.Hosting.Samples.Embedded
             if (_azureServer != null)
                 _azureServer.Dispose();
 
-            Settings.Default.AzureServiceBusSolutionName = txtSlnName.Text;
-            Settings.Default.AzureServiceBusSolutionPassword = txtSlnPassword.Text;
-            Settings.Default.AzureServiceBusUrlNamespace = txtUrlNamespace.Text;
+            Settings.Default.AzureServiceBusServiceNamespace = txtSlnName.Text;
+            Settings.Default.AzureServiceBusIssuerSecret = txtSlnPassword.Text;
+            Settings.Default.AzureServiceBusServicePath = txtUrlNamespace.Text;
             Settings.Default.AzureServiceBusUseSSL = chkUseSsl.Checked;
+            Settings.Default.AzureServiceBusIssuerName = txtIssuerName.Text;
             Settings.Default.Save();
 
         }

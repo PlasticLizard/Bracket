@@ -2,7 +2,7 @@
 using System.IO;
 using HttpServer;
 
-namespace Bracket.Hosting.HttpServer
+namespace Bracket.Hosting.Default
 {
     public static class HttpServerHelper
     {
