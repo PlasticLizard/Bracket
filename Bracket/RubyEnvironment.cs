@@ -56,10 +56,7 @@ namespace Bracket
 
                 if (!String.IsNullOrEmpty(GemPath))
                 {
-                    //if (String.IsNullOrEmpty(Environment.GetEnvironmentVariable("GEM_PATH")))
-                    //    Environment.SetEnvironmentVariable("GEM_PATH", GemPath);
                     Engine.AddLoadPath(GemPath);
-                    
                 }
                 
                 if (!String.IsNullOrEmpty(ApplicationRootPath))

@@ -116,9 +116,8 @@ namespace Bracket
 
         public string Body
         {
-            get { return (string) Get(RackEnvironmentVariables.RackInput); }
-            set {Add(RackEnvironmentVariables.RackInput,
-                       new StringIO(MutableString.CreateMutable(value, RubyEncoding.Default), IOMode.ReadOnly));}
+            get { return (Get(RackEnvironmentVariables.RackInput).ToString()); }
+            set { Add(RackEnvironmentVariables.RackInput, value); }
         }
 
         public bool IsMultithreaded
@@ -216,7 +215,7 @@ namespace Bracket
 
         public object Get(string variableKey)
         {
-            if (_envVariables.ContainsKey(variableKey))
+            if (_envVariables.ContainsKey(MutableString.CreateAscii(variableKey)))
                 return _envVariables[MutableString.CreateAscii(variableKey)];
             return null;
         }
@@ -246,8 +245,13 @@ namespace Bracket
             if (!Contains(RackEnvironmentVariables.RackErrors))
                 Add(RackEnvironmentVariables.RackErrors, context.StandardErrorOutput);
 
-            if (Body == null)
-                Body = String.Empty;
+            string body = Body ?? string.Empty;
+
+            Remove(RackEnvironmentVariables.RackInput);
+            Add(RackEnvironmentVariables.RackInput,
+                new StringIO(MutableString.CreateMutable(body, RubyEncoding.Default), IOMode.ReadOnly));
+
+            
         }
 
         public Hash ToRubyHash(RubyContext context)

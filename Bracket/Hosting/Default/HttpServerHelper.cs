@@ -8,6 +8,10 @@ namespace Bracket.Hosting.Default
     {
         public static RackRequest ToRackRequest(this IHttpRequest source)
         {
+            //Workaround for HttpServer position being at EOF
+            if (source.Body.CanSeek)
+                source.Body.Position = 0;
+
             var target = new RackRequest();
             target.RequestMethod = source.Method;
             target.ApplicationPath = String.Empty; //Currently not supporting multiple applications per server instance

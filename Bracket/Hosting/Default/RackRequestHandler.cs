@@ -32,7 +32,8 @@ namespace Bracket.Hosting.Default
 
             response.Status = (HttpStatusCode)rackResponse.Status;
             foreach (var header in rackResponse.Headers)
-                response.AddHeader(header.Key, header.Value);
+                if (header.Key.ToLower() != "content-length")
+                    response.AddHeader(header.Key, header.Value);
 
             _log.Write(this, LogPrio.Trace, String.Format("Finished handling Rack request for {0}", request.Uri));
 

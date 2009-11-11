@@ -65,10 +65,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="RackApplication\app.rb">
-    </Content>
-    <Content Include="RackApplication\config.ru">
-    </Content>
+    <None Include="RackApplication\app.rb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="RackApplication\config.ru">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="Rails\public\404.html" />
     <Content Include="Rails\public\422.html" />
     <Content Include="Rails\public\500.html" />
@@ -95,6 +97,9 @@
     <Content Include="IronRuby.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="RackApplication\shrimp.rb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Rails\app\controllers\application_controller.rb" />
     <None Include="Rails\app\controllers\test_controller.rb" />
     <None Include="Rails\app\helpers\application_helper.rb" />

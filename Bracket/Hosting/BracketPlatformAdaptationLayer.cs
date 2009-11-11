@@ -33,8 +33,6 @@ namespace Bracket.Hosting
 
         public override bool FileExists(string path)
         {
-            if (path.Contains("views"))
-                Console.WriteLine("a");
             path = ExpandPath(path);
 
            IVirtualDirectory dir = GetVirtualDirectoryForPath(path);
@@ -53,11 +51,6 @@ namespace Bracket.Hosting
             return dir.GetDirectories(path, searchPattern);
         }
 
-        //public override string GetFileName(string file)
-        //{
-        //    return base.GetFileName(file);
-        //}
-
         public override string[] GetFiles(string path, string searchPattern)
         {
             path = ExpandPath(path);
@@ -67,10 +60,6 @@ namespace Bracket.Hosting
                 return base.GetFiles(path, searchPattern);
             return dir.GetFiles(path, searchPattern);
         }
-        //public override Assembly LoadAssembly(string name)
-        //{
-        //   return  base.LoadAssembly(name);
-        //}
 
         public override Assembly LoadAssemblyFromPath(string path)
         {
@@ -121,8 +110,6 @@ namespace Bracket.Hosting
 
         private string ExpandPath(string path)
         {
-            if (path.Contains(".."))
-                Console.WriteLine("huh...");
             return RubyUtils.ExpandPath(this, path);
         }
 
@@ -131,7 +118,7 @@ namespace Bracket.Hosting
             //Yes, this is a lot of work to do in a lock. However my belief is that, in practice,
             // it will be pretty unlikely that multiple threads will contend for this lock, especially
             //as it will only be held for any substantial period of time while constructing a previously
-            //unseen archive directory
+            //unseen archive
             lock (_directoryLock)
             {
                 //After profiling, it turns out ZipFileAtRoot is very expensive, so

@@ -92,6 +92,9 @@
     <None Include="RackApp\config.ru">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="RackApp\shrimp.rb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="IronRuby.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
