@@ -4514,7 +4514,7 @@
             <param name="returnLabel">A LabelTarget used to return the result of the dynamic binding.</param>
             <returns>
             An Expression that performs tests on the dynamic operation arguments, and
-            performs the dynamic operation if hte tests are valid. If the tests fail on
+            performs the dynamic operation if the tests are valid. If the tests fail on
             subsequent occurrences of the dynamic operation, Bind will be called again
             to produce a new <see cref="T:Microsoft.Scripting.Ast.Expression"/> for the new argument types.
             </returns>
@@ -8407,6 +8407,151 @@
                Strongly-typed and parameterized exception factory.
             </summary>
         </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.ArgCntMustBeGreaterThanNameCnt">
+            <summary>
+            ArgumentException with message like "Argument count must be greater than number of named arguments."
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.ReducibleMustOverrideReduce">
+            <summary>
+            ArgumentException with message like "reducible nodes must override Expression.Reduce()"
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.MustReduceToDifferent">
+            <summary>
+            ArgumentException with message like "node cannot reduce to itself or null"
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.ReducedNotCompatible">
+            <summary>
+            ArgumentException with message like "cannot assign from the reduced node type to the original node type"
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.SetterHasNoParams">
+            <summary>
+            ArgumentException with message like "Setter must have parameters."
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.PropertyCannotHaveRefType">
+            <summary>
+            ArgumentException with message like "Property cannot have a managed pointer type."
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.IndexesOfSetGetMustMatch">
+            <summary>
+            ArgumentException with message like "Indexing parameters of getter and setter must match."
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.AccessorsCannotHaveVarArgs">
+            <summary>
+            ArgumentException with message like "Accessor method should not have VarArgs."
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.AccessorsCannotHaveByRefArgs">
+            <summary>
+            ArgumentException with message like "Accessor indexes cannot be passed ByRef."
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.BoundsCannotBeLessThanOne">
+            <summary>
+            ArgumentException with message like "Bounds count cannot be less than 1"
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.TypeMustNotBeByRef">
+            <summary>
+            ArgumentException with message like "type must not be ByRef"
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.TypeDoesNotHaveConstructorForTheSignature">
+            <summary>
+            ArgumentException with message like "Type doesn't have constructor with a given signature"
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.CountCannotBeNegative">
+            <summary>
+            ArgumentException with message like "Count must be non-negative."
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.ArrayTypeMustBeArray">
+            <summary>
+            ArgumentException with message like "arrayType must be an array type"
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.SetterMustBeVoid">
+            <summary>
+            ArgumentException with message like "Setter should have void type."
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.PropertyTyepMustMatchSetter">
+            <summary>
+            ArgumentException with message like "Property type must match the value type of setter"
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.BothAccessorsMustBeStatic">
+            <summary>
+            ArgumentException with message like "Both accessors must be static."
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.OnlyStaticMethodsHaveNullInstance">
+            <summary>
+            ArgumentException with message like "Static method requires null instance, non-static method requires non-null instance."
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.PropertyTypeCannotBeVoid">
+            <summary>
+            ArgumentException with message like "Property cannot have a void type."
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.InvalidUnboxType">
+            <summary>
+            ArgumentException with message like "Can only unbox from an object or interface type to a value type."
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.ArgumentMustNotHaveValueType">
+            <summary>
+            ArgumentException with message like "Argument must not have a value type."
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.MustBeReducible">
+            <summary>
+            ArgumentException with message like "must be reducible node"
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.DefaultBodyMustBeSupplied">
+            <summary>
+            ArgumentException with message like "Default body must be supplied if case bodies are not System.Void."
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.MethodBuilderDoesNotHaveTypeBuilder">
+            <summary>
+            ArgumentException with message like "MethodBuilder does not have a valid TypeBuilder"
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.TypeMustBeDerivedFromSystemDelegate">
+            <summary>
+            ArgumentException with message like "Type must be derived from System.Delegate"
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.ArgumentTypeCannotBeVoid">
+            <summary>
+            ArgumentException with message like "Argument type cannot be void"
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.LabelMustBeVoidOrHaveExpression">
+            <summary>
+            ArgumentException with message like "Label type must be System.Void if an expression is not supplied"
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.LabelTypeMustBeVoid">
+            <summary>
+            ArgumentException with message like "Type must be System.Void for this label argument"
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Error.QuotedExpressionMustBeLambda">
+            <summary>
+            ArgumentException with message like "Quoted expression must be a lambda"
+            </summary>
+        </member>
         <member name="M:Microsoft.Scripting.Ast.Error.VariableMustNotBeByRef(System.Object,System.Object)">
             <summary>
             ArgumentException with message like "Variable '{0}' uses unsupported type '{1}'. Reference types are not supported for variables."
@@ -9080,16 +9225,6 @@
         <member name="M:Microsoft.Scripting.Ast.Error.MustRewriteWithoutMethod(System.Object,System.Object)">
             <summary>
             InvalidOperationException with message like "Rewritten expression calls operator method '{0}', but the original node had no operator method. If this is is intentional, override '{1}' and change it to allow this rewrite."
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Ast.Error.InvalidNullValue(System.Object)">
-            <summary>
-            ArgumentNullException with message like "The value null is not of type '{0}' and cannot be used in this collection."
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Ast.Error.InvalidObjectType(System.Object,System.Object)">
-            <summary>
-            ArgumentException with message like "The value '{0}' is not of type '{1}' and cannot be used in this collection."
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Ast.Error.TryNotSupportedForMethodsWithRefArgs(System.Object)">
@@ -10674,7 +10809,7 @@
         </member>
         <member name="M:System.Dynamic.DynamicObject.MetaDynamic.GetLimitedSelf">
             <summary>
-            Returns our Expression converted to our known LimitType
+            Returns our Expression converted to DynamicObject
             </summary>
         </member>
         <member name="T:System.Runtime.CompilerServices.CallSite">

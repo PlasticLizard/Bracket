@@ -35,7 +35,7 @@ namespace Bracket.Hosting
         {
             path = ExpandPath(path);
 
-           IVirtualDirectory dir = GetVirtualDirectoryForPath(path);
+            IVirtualDirectory dir = GetVirtualDirectoryForPath(path);
             if (dir == null)
                 return base.FileExists(path);
             return dir.FileExists(path);
@@ -86,12 +86,12 @@ namespace Bracket.Hosting
 
         public override Stream OpenInputFileStream(string path)
         {
-            return OpenInputFileStream(path, FileMode.Open,FileAccess.Read,FileShare.Read);
+            return OpenInputFileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
         }
 
         public override Stream OpenInputFileStream(string path, FileMode mode, FileAccess access, FileShare share)
         {
-            return OpenInputFileStream(path, mode, access, share,1024);
+            return OpenInputFileStream(path, mode, access, share, 1024);
         }
 
         public override Stream OpenInputFileStream(string path, FileMode mode, FileAccess access, FileShare share, int bufferSize)
@@ -129,7 +129,8 @@ namespace Bracket.Hosting
                         return _directories[key];
                 }
 
-                if (path.IndexOf(".zip", StringComparison.CurrentCultureIgnoreCase) <= 0)
+                if (path.IndexOf(".zip", StringComparison.CurrentCultureIgnoreCase) <= 0 &&
+                    path.IndexOf(VirtualFileUtils.OBSCURED_ARCHIVE_EXTENSION, StringComparison.CurrentCultureIgnoreCase) <= 0)
                     return null;
 
                 string zipRoot = VirtualFileUtils.ZipFileAtRoot(path);

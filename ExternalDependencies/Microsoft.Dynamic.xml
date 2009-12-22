@@ -122,6 +122,11 @@
             <param name="expression">An <see cref="T:Microsoft.Scripting.Ast.Expression"/> to convert to void. </param>
             <returns>An <see cref="T:Microsoft.Scripting.Ast.Expression"/> that has the <see cref="P:System.Linq.Expressions.Expression.NodeType"/> property equal to <see cref="F:System.Linq.Expressions.ExpressionType.ConvertChecked"/> and the <see cref="P:System.Linq.Expressions.UnaryExpression.Operand"/> and <see cref="P:System.Linq.Expressions.Expression.Type"/> property set to void.</returns>
         </member>
+        <member name="M:Microsoft.Scripting.Ast.Utils.Box(Microsoft.Scripting.Ast.Expression)">
+            <summary>
+            Returns an expression that boxes a given value. Uses boxed objects cache for Int32 and Boolean types.
+            </summary>
+        </member>
         <member name="M:Microsoft.Scripting.Ast.Utils.Lambda(System.Type,System.String)">
             <summary>
             Creates new instance of the LambdaBuilder with the specified name and return type.
@@ -129,6 +134,23 @@
             <param name="returnType">Return type of the lambda being built.</param>
             <param name="name">Name for the lambda being built.</param>
             <returns>new LambdaBuilder instance</returns>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Utils.IsAssignment(Microsoft.Scripting.Ast.ExpressionType)">
+            <summary>
+            Determines whether specified expression type represents an assignment.
+            </summary>
+            <returns>
+            True if the expression type represents an assignment.
+            </returns>
+            <remarks>
+            Note that some other nodes can also assign to variables, members or array items:
+            MemberInit, NewArrayInit, Call with ref params, New with ref params, Dynamic with ref params.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Scripting.Ast.Utils.GetLValueAccess(Microsoft.Scripting.Ast.ExpressionType)">
+            <summary>
+            Determines if the left child of the given expression is read or written to or both.
+            </summary>
         </member>
         <member name="M:Microsoft.Scripting.Ast.Utils.SimpleCallHelper(System.Reflection.MethodInfo,Microsoft.Scripting.Ast.Expression[])">
             <summary>
@@ -667,516 +689,6 @@
             TODO: Alternatively, it should be sufficient to remember indices for this, list, dict and block.
             </summary>
         </member>
-        <member name="T:Microsoft.Scripting.Actions.DefaultBinder">
-            <summary>
-            Provides binding semantics for a language.  This include conversions as well as support
-            for producing rules for actions.  These optimized rules are used for calling methods, 
-            performing operators, and getting members using the ActionBinder's conversion semantics.
-            </summary>
-        </member>
-        <member name="T:Microsoft.Scripting.Actions.ActionBinder">
-            <summary>
-            Provides binding semantics for a language.  This include conversions as well as support
-            for producing rules for actions.  These optimized rules are used for calling methods, 
-            performing operators, and getting members using the ActionBinder's conversion semantics.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.ActionBinder.Convert(System.Object,System.Type)">
-            <summary>
-            Converts an object at runtime into the specified type.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.ActionBinder.CanConvertFrom(System.Type,System.Type,System.Boolean,Microsoft.Scripting.Actions.Calls.NarrowingLevel)">
-            <summary>
-            Determines if a conversion exists from fromType to toType at the specified narrowing level.
-            toNotNullable is true if the target variable doesn't allow null values.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.ActionBinder.PreferConvert(System.Type,System.Type)">
-            <summary>
-            Provides ordering for two parameter types if there is no conversion between the two parameter types.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.ActionBinder.ConvertExpression(Microsoft.Scripting.Ast.Expression,System.Type,Microsoft.Scripting.Actions.ConversionResultKind,Microsoft.Scripting.Actions.Calls.OverloadResolverFactory)">
-            <summary>
-            Converts the provided expression to the given type.  The expression is safe to evaluate multiple times.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.ActionBinder.GetMember(Microsoft.Scripting.Actions.MemberRequestKind,System.Type,System.String)">
-            <summary>
-            Gets the members that are visible from the provided type of the specified name.
-            
-            The default implemetnation first searches the type, then the flattened heirachy of the type, and then
-            registered extension methods.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.ActionBinder.MakeStaticAssignFromDerivedTypeError(System.Type,System.Dynamic.DynamicMetaObject,Microsoft.Scripting.Actions.MemberTracker,System.Dynamic.DynamicMetaObject,Microsoft.Scripting.Actions.Calls.OverloadResolverFactory)">
-            <summary>
-            Called when a set is attempting to assign to a field or property from a derived class through the base class.
-            
-            The default behavior is to allow the assignment.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.ActionBinder.MakeStaticPropertyInstanceAccessError(Microsoft.Scripting.Actions.PropertyTracker,System.Boolean,System.Collections.Generic.IList{System.Dynamic.DynamicMetaObject})">
-            <summary>
-            Creates an ErrorInfo object when a static property is accessed from an instance member.  The default behavior is throw
-            an exception indicating that static members properties be accessed via an instance.  Languages can override this to 
-            customize the exception, message, or to produce an ErrorInfo object which reads or writes to the property being accessed.
-            </summary>
-            <param name="tracker">The static property being accessed through an instance</param>
-            <param name="isAssignment">True if the user is assigning to the property, false if the user is reading from the property</param>
-            <param name="parameters">The parameters being used to access the property.  This includes the instance as the first entry, any index parameters, and the
-            value being assigned as the last entry if isAssignment is true.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.ActionBinder.MakeMissingMemberError(System.Type,System.Dynamic.DynamicMetaObject,System.String)">
-            <summary>
-            Provides a way for the binder to provide a custom error message when lookup fails.  Just
-            doing this for the time being until we get a more robust error return mechanism.
-            
-            Deprecated, use the non-generic version instead
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.ActionBinder.GetAllExtensionMembers(System.Type,System.String)">
-            <summary>
-            Gets the extension members of the given name from the provided type.  Base classes are also
-            searched for their extension members.  Once any of the types in the inheritance hierarchy
-            provide an extension member the search is stopped.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.ActionBinder.GetExtensionMembers(System.Type,System.String)">
-            <summary>
-            Gets the extension members of the given name from the provided type.  Subclasses of the
-            type and their extension members are not searched.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.ActionBinder.ReturnMemberTracker(System.Type,Microsoft.Scripting.Actions.MemberTracker)">
-            <summary>
-            Provides an opportunity for languages to replace all MemberInfo's with their own type.
-            
-            Alternatlely a language can expose MemberInfo's directly.
-            </summary>
-            <param name="memberTracker">The member which is being returned to the user.</param>
-            <param name="type">Tthe type which the memberTrack was accessed from</param>
-            <returns></returns>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.GetIndex(Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,System.Dynamic.DynamicMetaObject[])">
-            <summary>
-            Creates the MetaObject for indexing directly into arrays or indexing into objects which have
-            default members.  Returns null if we're not an indexing operation.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.SetIndex(Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,System.Dynamic.DynamicMetaObject[])">
-            <summary>
-            Creates the MetaObject for indexing directly into arrays or indexing into objects which have
-            default members.  Returns null if we're not an indexing operation.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeGeneralOperatorRule(System.String,Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,System.Dynamic.DynamicMetaObject[])">
-            <summary>
-            Creates the meta object for the rest of the operations: comparisons and all other
-            ExpressionType.  If the operation cannot be completed a MetaObject which indicates an
-            error will be returned.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryNullComparisonRule(System.Dynamic.DynamicMetaObject[])">
-            <summary>
-            Produces a rule for comparing a value to null - supports comparing object references and nullable types.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.GetMember(System.String,System.Dynamic.DynamicMetaObject,Microsoft.Scripting.Actions.Calls.OverloadResolverFactory)">
-            <summary>
-            Builds a MetaObject for performing a member get.  Supports all built-in .NET members, the OperatorMethod 
-            GetBoundMember, and StrongBox instances.
-            </summary>
-            <param name="name">
-            The name of the member to retrieve.  This name is not processed by the DefaultBinder and
-            is instead handed off to the GetMember API which can do name mangling, case insensitive lookups, etc...
-            </param>
-            <param name="target">
-            The MetaObject from which the member is retrieved.
-            </param>
-            <param name="resolverFactory">
-            Provides overload resolution and method binding for any calls which need to be performed for the GetMember.
-            </param>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.GetMember(System.String,System.Dynamic.DynamicMetaObject,Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,System.Boolean,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Builds a MetaObject for performing a member get.  Supports all built-in .NET members, the OperatorMethod 
-            GetBoundMember, and StrongBox instances.
-            </summary>
-            <param name="name">
-            The name of the member to retrieve.  This name is not processed by the DefaultBinder and
-            is instead handed off to the GetMember API which can do name mangling, case insensitive lookups, etc...
-            </param>
-            <param name="target">
-            The MetaObject from which the member is retrieved.
-            </param>
-            <param name="resolverFactory">
-            An OverloadResolverFactory which can be used for performing overload resolution and method binding.
-            </param>
-            <param name="isNoThrow">
-            True if the operation should return Operation.Failed on failure, false if it
-            should return the exception produced by MakeMissingMemberError.
-            </param>
-            <param name="errorSuggestion">
-            The meta object to be used if the get results in an error.
-            </param>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeOperatorGetMemberBody(Microsoft.Scripting.Actions.DefaultBinder.GetMemberInfo,System.Dynamic.DynamicMetaObject,System.Type,System.String)">
-            <summary> if a member-injector is defined-on or registered-for this type call it </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryConvertToObject(System.Type,System.Type,System.Dynamic.DynamicMetaObject,System.Dynamic.BindingRestrictions)">
-            <summary>
-            Checks if the conversion is to object and produces a target if it is.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryAllConversions(Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,System.Type,Microsoft.Scripting.Actions.ConversionResultKind,System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Checks if any conversions are available and if so builds the target for that conversion.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryAssignableConversion(System.Type,System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Checks if the conversion can be handled by a simple cast.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryUserDefinedConversion(Microsoft.Scripting.Actions.ConversionResultKind,System.Type,System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Checks if the conversion can be handled by calling a user-defined conversion method.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryOneConversion(Microsoft.Scripting.Actions.ConversionResultKind,System.Type,System.Type,System.Type,System.String,System.Boolean,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Helper that checkes both types to see if either one defines the specified conversion
-            method.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryUserDefinedConversion(Microsoft.Scripting.Actions.ConversionResultKind,System.Type,System.Type,Microsoft.Scripting.Actions.MemberGroup,System.Boolean,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Checks if any of the members of the MemberGroup provide the applicable conversion and 
-            if so uses it to build a conversion rule.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryExtensibleConversion(System.Type,System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Checks if the conversion is to applicable by extracting the value from Extensible of T.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryImplicitNumericConversion(System.Type,System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Checks if there's an implicit numeric conversion for primitive data types.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryNullableConversion(Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,System.Type,Microsoft.Scripting.Actions.ConversionResultKind,System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Checks if there's a conversion to/from Nullable of T.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryNullConversion(System.Type,System.Type,System.Dynamic.BindingRestrictions)">
-            <summary>
-            Checks to see if there's a conversion of null to a reference type
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeErrorTarget(System.Type,Microsoft.Scripting.Actions.ConversionResultKind,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Helper to produce an error when a conversion cannot occur
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeBoxingTarget(System.Dynamic.DynamicMetaObject,System.Dynamic.BindingRestrictions)">
-            <summary>
-            Helper to produce a rule which just boxes a value type
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeConversionTarget(Microsoft.Scripting.Actions.ConversionResultKind,Microsoft.Scripting.Actions.MethodTracker,System.Type,System.Boolean,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Helper to produce a conversion rule by calling the helper method to do the convert
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeExtensibleConversionTarget(Microsoft.Scripting.Actions.ConversionResultKind,Microsoft.Scripting.Actions.MethodTracker,System.Type,System.Boolean,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Helper to produce a conversion rule by calling the helper method to do the convert
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeConversionTargetWorker(Microsoft.Scripting.Actions.ConversionResultKind,Microsoft.Scripting.Actions.MethodTracker,System.Boolean,System.Dynamic.BindingRestrictions,Microsoft.Scripting.Ast.Expression)">
-            <summary>
-            Helper to produce a conversion rule by calling the method to do the convert.  This version takes the parameter
-            to be passed to the conversion function and we call it w/ our own value or w/ our Extensible.Value.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.WrapForThrowingTry(Microsoft.Scripting.Actions.ConversionResultKind,System.Boolean,Microsoft.Scripting.Ast.Expression,System.Type)">
-            <summary>
-            Helper to wrap explicit conversion call into try/catch incase it throws an exception.  If
-            it throws the default value is returned.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeSimpleConversionTarget(System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Helper to produce a rule when no conversion is required (the strong type of the expression
-            input matches the type we're converting to or has an implicit conversion at the IL level)
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeSimpleExtensibleConversionTarget(System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Helper to produce a rule when no conversion is required from an extensible type's
-            underlying storage to the type we're converting to.  The type of extensible type
-            matches the type we're converting to or has an implicit conversion at the IL level.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeExtensibleTarget(System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Helper to extract the value from an Extensible of T
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeNullToNullableOfTTarget(System.Type,System.Dynamic.BindingRestrictions)">
-            <summary>
-            Helper to convert a null value to nullable of T
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeTToNullableOfTTarget(System.Type,System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Helper to produce the rule for converting T to Nullable of T
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeConvertingToTToNullableOfTTarget(Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,System.Type,Microsoft.Scripting.Actions.ConversionResultKind,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Helper to produce the rule for converting T to Nullable of T
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.GetTryConvertReturnValue(System.Type)">
-            <summary>
-            Returns a value which indicates failure when a OldConvertToAction of ImplicitTry or
-            ExplicitTry.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.GetExtensibleValue(System.Type,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Helper to extract the Value of an Extensible of T from the
-            expression being converted.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.GetUnderlyingType(System.Type)">
-            <summary>
-            Helper that checks if fromType is an Extensible of T or a subtype of 
-            Extensible of T and if so returns the T.  Otherwise it returns fromType.
-            
-            This is used to treat extensible types the same as their underlying types.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeNullTarget(System.Type,System.Dynamic.BindingRestrictions)">
-            <summary>
-            Creates a target which returns null for a reference type.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.CallMethod(Microsoft.Scripting.Actions.DefaultOverloadResolver,System.Collections.Generic.IList{System.Reflection.MethodBase})">
-            <summary>
-            Performs binding against a set of overloaded methods using the specified arguments.  The arguments are
-            consumed as specified by the CallSignature object.
-            </summary>
-            <param name="resolver">Overload resolver.</param>
-            <param name="targets">The methods to be called</param>
-            <returns>A meta object which results from the call.</returns>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.CallMethod(Microsoft.Scripting.Actions.DefaultOverloadResolver,System.Collections.Generic.IList{System.Reflection.MethodBase},System.String)">
-            <summary>
-            Performs binding against a set of overloaded methods using the specified arguments.  The arguments are
-            consumed as specified by the CallSignature object.
-            </summary>
-            <param name="resolver">Overload resolver.</param>
-            <param name="targets">The methods to be called</param>
-            <param name="name">The name of the method or null to use the name from targets.</param>
-            <returns>A meta object which results from the call.</returns>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.CallMethod(Microsoft.Scripting.Actions.DefaultOverloadResolver,System.Collections.Generic.IList{System.Reflection.MethodBase},System.Dynamic.BindingRestrictions)">
-            <summary>
-            Performs binding against a set of overloaded methods using the specified arguments.  The arguments are
-            consumed as specified by the CallSignature object.
-            </summary>
-            <param name="resolver">Overload resolver.</param>
-            <param name="targets">The methods to be called</param>
-            <param name="restrictions">Additional restrictions which should be applied to the resulting MetaObject.</param>
-            <returns>A meta object which results from the call.</returns>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.CallMethod(Microsoft.Scripting.Actions.DefaultOverloadResolver,System.Collections.Generic.IList{System.Reflection.MethodBase},System.Dynamic.BindingRestrictions,System.String)">
-            <summary>
-            Performs binding against a set of overloaded methods using the specified arguments.  The arguments are
-            consumed as specified by the CallSignature object.
-            </summary>
-            <param name="resolver">Overload resolver.</param>
-            <param name="targets">The methods to be called</param>
-            <param name="restrictions">Additional restrictions which should be applied to the resulting MetaObject.</param>
-            <param name="name">The name of the method or null to use the name from targets.</param>
-            <returns>A meta object which results from the call.</returns>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.CallMethod(Microsoft.Scripting.Actions.DefaultOverloadResolver,System.Collections.Generic.IList{System.Reflection.MethodBase},System.Dynamic.BindingRestrictions,System.String,Microsoft.Scripting.Actions.Calls.NarrowingLevel,Microsoft.Scripting.Actions.Calls.NarrowingLevel,Microsoft.Scripting.Actions.Calls.BindingTarget@)">
-            <summary>
-            Performs binding against a set of overloaded methods using the specified arguments.  The arguments are
-            consumed as specified by the CallSignature object.
-            </summary>
-            <param name="minLevel">TODO.</param>
-            <param name="maxLevel">TODO.</param>
-            <param name="resolver">Overload resolver.</param>
-            <param name="targets">The methods to be called</param>
-            <param name="restrictions">Additional restrictions which should be applied to the resulting MetaObject.</param>
-            <param name="target">The resulting binding target which can be used for producing error information.</param>
-            <param name="name">The name of the method or null to use the name from targets.</param>
-            <returns>A meta object which results from the call.</returns>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeSplatTests(Microsoft.Scripting.Runtime.CallTypes,Microsoft.Scripting.Actions.CallSignature,System.Boolean,System.Collections.Generic.IList{System.Dynamic.DynamicMetaObject})">
-            <summary>
-            Makes test for param arrays and param dictionary parameters.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeParamsArrayTest(Microsoft.Scripting.Runtime.CallTypes,Microsoft.Scripting.Actions.CallSignature,System.Boolean,System.Collections.Generic.IList{System.Dynamic.DynamicMetaObject})">
-            <summary>
-            Pulls out the right argument to build the splat test.  MakeParamsTest makes the actual test.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeParamsTest(System.Dynamic.DynamicMetaObject,System.Boolean)">
-            <summary>
-            Builds the restrictions for calling with a splatted argument array.  Ensures that the
-            argument is still an ICollection of object and that it has the same number of arguments.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeParamsDictionaryTest(System.Collections.Generic.IList{System.Dynamic.DynamicMetaObject},System.Boolean)">
-            <summary>
-            Builds the restrictions for calling with keyword arguments.  The restrictions include
-            tests on the individual keys of the dictionary to ensure they have the same names.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeOperatorDeleteMemberBody(Microsoft.Scripting.Actions.DefaultBinder.SetOrDeleteMemberInfo,System.Dynamic.DynamicMetaObject,System.Type,System.String)">
-            <summary> if a member-injector is defined-on or registered-for this type call it </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.SetMember(System.String,System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject,Microsoft.Scripting.Actions.Calls.OverloadResolverFactory)">
-            <summary>
-            Builds a MetaObject for performing a member get.  Supports all built-in .NET members, the OperatorMethod 
-            GetBoundMember, and StrongBox instances.
-            </summary>
-            <param name="name">
-            The name of the member to retrieve.  This name is not processed by the DefaultBinder and
-            is instead handed off to the GetMember API which can do name mangling, case insensitive lookups, etc...
-            </param>
-            <param name="target">
-            The MetaObject from which the member is retrieved.
-            </param>
-            <param name="value">
-            The value being assigned to the target member.
-            </param>
-            <param name="resolverFactory">
-            Provides overload resolution and method binding for any calls which need to be performed for the SetMember.
-            </param>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.SetMember(System.String,System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject,Microsoft.Scripting.Actions.Calls.OverloadResolverFactory)">
-            <summary>
-            Builds a MetaObject for performing a member get.  Supports all built-in .NET members, the OperatorMethod 
-            GetBoundMember, and StrongBox instances.
-            </summary>
-            <param name="name">
-            The name of the member to retrieve.  This name is not processed by the DefaultBinder and
-            is instead handed off to the GetMember API which can do name mangling, case insensitive lookups, etc...
-            </param>
-            <param name="target">
-            The MetaObject from which the member is retrieved.
-            </param>
-            <param name="value">
-            The value being assigned to the target member.
-            </param>
-            <param name="resolverFactory">
-            Provides overload resolution and method binding for any calls which need to be performed for the SetMember.
-            </param>
-            <param name="errorSuggestion">
-            Provides a DynamicMetaObject that is to be used as the result if the member cannot be set.  If null then then a language
-            specific error code is provided by ActionBinder.MakeMissingMemberErrorForAssign which can be overridden by the language.
-            </param>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeOperatorSetMemberBody(Microsoft.Scripting.Actions.DefaultBinder.SetOrDeleteMemberInfo,System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject,System.Type,System.String)">
-            <summary> if a member-injector is defined-on or registered-for this type call it </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeUndeletableMemberError(System.Type,System.String)">
-            <summary>
-            Provides a way for the binder to provide a custom error message when lookup fails.  Just
-            doing this for the time being until we get a more robust error return mechanism.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeNonPublicMemberGetError(Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,Microsoft.Scripting.Actions.MemberTracker,System.Type,System.Dynamic.DynamicMetaObject)">
-            <summary>
-            Called when the user is accessing a protected or private member on a get.
-            
-            The default implementation allows access to the fields or properties using reflection.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeReadOnlyMemberError(System.Type,System.String)">
-            <summary>
-            Provides a way for the binder to provide a custom error message when lookup fails.  Just
-            doing this for the time being until we get a more robust error return mechanism.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.Call(Microsoft.Scripting.Actions.CallSignature,Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject[])">
-            <summary>
-            Provides default binding for performing a call on the specified meta objects.
-            </summary>
-            <param name="signature">The signature describing the call</param>
-            <param name="target">The meta object to be called.</param>
-            <param name="args">
-            Additional meta objects are the parameters for the call as specified by the CallSignature in the CallAction.
-            </param>
-            <param name="resolverFactory">Overload resolver factory.</param>
-            <returns>A MetaObject representing the call or the error.</returns>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.GetTargetInfo(System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject[])">
-            <summary>
-            Gets a TargetInfo object for performing a call on this object.  
-            
-            If this object is a delegate we bind to the Invoke method.
-            If this object is a MemberGroup or MethodGroup we bind to the methods in the member group.
-            If this object is a BoundMemberTracker we bind to the methods with the bound instance.
-            If the underlying type has defined an operator Call method we'll bind to that method.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryGetMethodGroupTargets(System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject[],Microsoft.Scripting.Actions.MethodGroup)">
-            <summary>
-            Binds to the methods in a method group.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryGetMemberGroupTargets(System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject[],Microsoft.Scripting.Actions.MemberGroup)">
-            <summary>
-            Binds to the methods in a member group.  
-            
-            TODO: We should really only have either MemberGroup or MethodGroup, not both.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryGetBoundMemberTargets(System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject[],Microsoft.Scripting.Actions.BoundMemberTracker)">
-            <summary>
-            Binds to the BoundMemberTracker and uses the instance in the tracker and restricts
-            based upon the object instance type.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryGetDelegateTargets(System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject[],System.Delegate)">
-            <summary>
-            Binds to the Invoke method on a delegate if this is a delegate type.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryGetOperatorTargets(System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject[],System.Object)">
-            <summary>
-            Attempts to bind to an operator Call method.
-            </summary>
-        </member>
-        <member name="T:Microsoft.Scripting.Actions.DefaultBinder.GetMemberInfo">
-            <summary>
-            Helper class for flowing information about the GetMember request.
-            </summary>
-        </member>
-        <member name="T:Microsoft.Scripting.Actions.DefaultBinder.SetOrDeleteMemberInfo">
-            <summary>
-            Helper class for flowing information about the GetMember request.
-            </summary>
-        </member>
-        <member name="T:Microsoft.Scripting.Actions.DefaultBinder.TargetInfo">
-            <summary>
-            Encapsulates information about the target of the call.  This includes an implicit instance for the call,
-            the methods that we'll be calling as well as any restrictions required to perform the call.
-            </summary>
-        </member>
         <member name="T:Microsoft.Scripting.ComInterop.IDispatchComObject">
             <summary>
             An object that implements IDispatch
@@ -1552,37 +1064,6 @@
             exposed through any public APIs.
             </summary>
         </member>
-        <member name="M:Microsoft.Scripting.Utils.ReflectedCaller.Create(System.Reflection.MethodInfo)">
-            <summary>
-            Creates a new ReflectedCaller which can be used to quickly invoke the provided MethodInfo.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Utils.ReflectedCaller.TryGetParameterOrReturnType(System.Reflection.MethodInfo,System.Reflection.ParameterInfo[],System.Int32)">
-            <summary>
-            Gets the next type or null if no more types are available.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Utils.ReflectedCaller.SlowCreate(System.Reflection.MethodInfo,System.Reflection.ParameterInfo[])">
-            <summary>
-            Uses reflection to create new instance of the appropriate ReflectedCaller
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Utils.ReflectedCaller.FastCreate(System.Reflection.MethodInfo,System.Reflection.ParameterInfo[])">
-            <summary>
-            Fast creation works if we have a known primitive types for the entire
-            method siganture.  If we have any non-primitive types then FastCreate
-            falls back to SlowCreate which works for all types.
-            
-            Fast creation is fast because it avoids using reflection (MakeGenericType
-            and Activator.CreateInstance) to create the types.  It does this through
-            calling a series of generic methods picking up each strong type of the
-            signature along the way.  When it runs out of types it news up the 
-            appropriate ReflectedCaller with the strong-types that have been built up.
-            
-            One relaxation is that for return types which are non-primitive types
-            we can fallback to object due to relaxed delegates.
-            </summary>
-        </member>
         <member name="T:Microsoft.Scripting.Ast.LambdaBuilder">
             <summary>
             The builder for creating the LambdaExpression node.
@@ -1848,12 +1329,6 @@
             Create a compiled delegate for the LightLambda, and saves it so
             future calls to Run will execute the compiled code instead of
             interpreting.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Interpreter.LightDelegateCreator.UpdateExecutionCount">
-            <summary>
-            Updates the execution count of this light delegate. If a certain
-            threshold is reached, it will start a background compilation.
             </summary>
         </member>
         <member name="P:Microsoft.Scripting.Interpreter.LightDelegateCreator.SameDelegateType">
@@ -2718,6 +2193,640 @@
             System.Security.VerificationException with message like "Non-verifiable assembly generated: {0}:\nAssembly preserved as {1}\nError text:\n{2}\n"
             </summary>
         </member>
+        <member name="T:Microsoft.Scripting.Actions.DefaultBinder">
+            <summary>
+            Provides binding semantics for a language.  This include conversions as well as support
+            for producing rules for actions.  These optimized rules are used for calling methods, 
+            performing operators, and getting members using the ActionBinder's conversion semantics.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Scripting.Actions.ActionBinder">
+            <summary>
+            Provides binding semantics for a language.  This include conversions as well as support
+            for producing rules for actions.  These optimized rules are used for calling methods, 
+            performing operators, and getting members using the ActionBinder's conversion semantics.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.ActionBinder.Convert(System.Object,System.Type)">
+            <summary>
+            Converts an object at runtime into the specified type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.ActionBinder.CanConvertFrom(System.Type,System.Type,System.Boolean,Microsoft.Scripting.Actions.Calls.NarrowingLevel)">
+            <summary>
+            Determines if a conversion exists from fromType to toType at the specified narrowing level.
+            toNotNullable is true if the target variable doesn't allow null values.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.ActionBinder.PreferConvert(System.Type,System.Type)">
+            <summary>
+            Provides ordering for two parameter types if there is no conversion between the two parameter types.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.ActionBinder.ConvertExpression(Microsoft.Scripting.Ast.Expression,System.Type,Microsoft.Scripting.Actions.ConversionResultKind,Microsoft.Scripting.Actions.Calls.OverloadResolverFactory)">
+            <summary>
+            Converts the provided expression to the given type.  The expression is safe to evaluate multiple times.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.ActionBinder.GetMember(Microsoft.Scripting.Actions.MemberRequestKind,System.Type,System.String)">
+            <summary>
+            Gets the members that are visible from the provided type of the specified name.
+            
+            The default implemetnation first searches the type, then the flattened heirachy of the type, and then
+            registered extension methods.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.ActionBinder.MakeStaticAssignFromDerivedTypeError(System.Type,System.Dynamic.DynamicMetaObject,Microsoft.Scripting.Actions.MemberTracker,System.Dynamic.DynamicMetaObject,Microsoft.Scripting.Actions.Calls.OverloadResolverFactory)">
+            <summary>
+            Called when a set is attempting to assign to a field or property from a derived class through the base class.
+            
+            The default behavior is to allow the assignment.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.ActionBinder.MakeStaticPropertyInstanceAccessError(Microsoft.Scripting.Actions.PropertyTracker,System.Boolean,System.Collections.Generic.IList{System.Dynamic.DynamicMetaObject})">
+            <summary>
+            Creates an ErrorInfo object when a static property is accessed from an instance member.  The default behavior is throw
+            an exception indicating that static members properties be accessed via an instance.  Languages can override this to 
+            customize the exception, message, or to produce an ErrorInfo object which reads or writes to the property being accessed.
+            </summary>
+            <param name="tracker">The static property being accessed through an instance</param>
+            <param name="isAssignment">True if the user is assigning to the property, false if the user is reading from the property</param>
+            <param name="parameters">The parameters being used to access the property.  This includes the instance as the first entry, any index parameters, and the
+            value being assigned as the last entry if isAssignment is true.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.ActionBinder.MakeMissingMemberError(System.Type,System.Dynamic.DynamicMetaObject,System.String)">
+            <summary>
+            Provides a way for the binder to provide a custom error message when lookup fails.  Just
+            doing this for the time being until we get a more robust error return mechanism.
+            
+            Deprecated, use the non-generic version instead
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.ActionBinder.GetAllExtensionMembers(System.Type,System.String)">
+            <summary>
+            Gets the extension members of the given name from the provided type.  Base classes are also
+            searched for their extension members.  Once any of the types in the inheritance hierarchy
+            provide an extension member the search is stopped.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.ActionBinder.GetExtensionMembers(System.Type,System.String)">
+            <summary>
+            Gets the extension members of the given name from the provided type.  Subclasses of the
+            type and their extension members are not searched.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.ActionBinder.ReturnMemberTracker(System.Type,Microsoft.Scripting.Actions.MemberTracker)">
+            <summary>
+            Provides an opportunity for languages to replace all MemberTracker's with their own type.
+            
+            Alternatlely a language can expose MemberTracker's directly.
+            </summary>
+            <param name="memberTracker">The member which is being returned to the user.</param>
+            <param name="type">Tthe type which the memberTrack was accessed from</param>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.Scripting.Actions.ActionBinder.PrivateBinding">
+            <summary>
+            Determines if the binder should allow access to non-public members.
+            
+            By default the binder does not allow access to non-public members.  Base classes
+            can inherit and override this value to customize whether or not private binding
+            is available.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.GetIndex(Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,System.Dynamic.DynamicMetaObject[])">
+            <summary>
+            Creates the MetaObject for indexing directly into arrays or indexing into objects which have
+            default members.  Returns null if we're not an indexing operation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.SetIndex(Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,System.Dynamic.DynamicMetaObject[])">
+            <summary>
+            Creates the MetaObject for indexing directly into arrays or indexing into objects which have
+            default members.  Returns null if we're not an indexing operation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeGeneralOperatorRule(System.String,Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,System.Dynamic.DynamicMetaObject[])">
+            <summary>
+            Creates the meta object for the rest of the operations: comparisons and all other
+            ExpressionType.  If the operation cannot be completed a MetaObject which indicates an
+            error will be returned.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeGeneralOperatorRule(Microsoft.Scripting.Ast.ExpressionType,Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,System.Dynamic.DynamicMetaObject[])">
+            <summary>
+            Creates the meta object for the rest of the operations: comparisons and all other
+            ExpressionType.  If the operation cannot be completed a MetaObject which indicates an
+            error will be returned.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryNullComparisonRule(System.Dynamic.DynamicMetaObject[])">
+            <summary>
+            Produces a rule for comparing a value to null - supports comparing object references and nullable types.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.GetMember(System.String,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Builds a MetaObject for performing a member get.  Supports all built-in .NET members, the OperatorMethod 
+            GetBoundMember, and StrongBox instances.
+            </summary>
+            <param name="name">
+            The name of the member to retrieve.  This name is not processed by the DefaultBinder and
+            is instead handed off to the GetMember API which can do name mangling, case insensitive lookups, etc...
+            </param>
+            <param name="target">
+            The MetaObject from which the member is retrieved.
+            </param>
+            <returns>
+            Returns a DynamicMetaObject which represents the value that will be returned when the member is accessed.
+            
+            The returned DynamicMetaObject may be strongly typed to a value type which needs boxing before being
+            returned from a standard DLR GetMemberBinder.  The language is responsible for performing any boxing
+            so that it has an opportunity to perform custom boxing.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.GetMember(System.String,System.Dynamic.DynamicMetaObject,Microsoft.Scripting.Actions.Calls.OverloadResolverFactory)">
+            <summary>
+            Builds a MetaObject for performing a member get.  Supports all built-in .NET members, the OperatorMethod 
+            GetBoundMember, and StrongBox instances.
+            </summary>
+            <param name="name">
+            The name of the member to retrieve.  This name is not processed by the DefaultBinder and
+            is instead handed off to the GetMember API which can do name mangling, case insensitive lookups, etc...
+            </param>
+            <param name="target">
+            The MetaObject from which the member is retrieved.
+            </param>
+            <param name="resolverFactory">
+            Provides overload resolution and method binding for any calls which need to be performed for the GetMember.
+            </param>
+            <returns>
+            Returns a DynamicMetaObject which represents the value that will be returned when the member is accessed.
+            
+            The returned DynamicMetaObject may be strongly typed to a value type which needs boxing before being
+            returned from a standard DLR GetMemberBinder.  The language is responsible for performing any boxing
+            so that it has an opportunity to perform custom boxing.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.GetMember(System.String,System.Dynamic.DynamicMetaObject,Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,System.Boolean,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Builds a MetaObject for performing a member get.  Supports all built-in .NET members, the OperatorMethod 
+            GetBoundMember, and StrongBox instances.
+            </summary>
+            <param name="name">
+            The name of the member to retrieve.  This name is not processed by the DefaultBinder and
+            is instead handed off to the GetMember API which can do name mangling, case insensitive lookups, etc...
+            </param>
+            <param name="target">
+            The MetaObject from which the member is retrieved.
+            </param>
+            <param name="resolverFactory">
+            An OverloadResolverFactory which can be used for performing overload resolution and method binding.
+            </param>
+            <param name="isNoThrow">
+            True if the operation should return Operation.Failed on failure, false if it
+            should return the exception produced by MakeMissingMemberError.
+            </param>
+            <param name="errorSuggestion">
+            The meta object to be used if the get results in an error.
+            </param>
+            <returns>
+            Returns a DynamicMetaObject which represents the value that will be returned when the member is accessed.
+            
+            The returned DynamicMetaObject may be strongly typed to a value type which needs boxing before being
+            returned from a standard DLR GetMemberBinder.  The language is responsible for performing any boxing
+            so that it has an opportunity to perform custom boxing.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.GetMember(System.String,System.Dynamic.DynamicMetaObject,System.Boolean,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Builds a MetaObject for performing a member get.  Supports all built-in .NET members, the OperatorMethod 
+            GetBoundMember, and StrongBox instances.
+            </summary>
+            <param name="name">
+            The name of the member to retrieve.  This name is not processed by the DefaultBinder and
+            is instead handed off to the GetMember API which can do name mangling, case insensitive lookups, etc...
+            </param>
+            <param name="target">
+            The MetaObject from which the member is retrieved.
+            </param>
+            <param name="isNoThrow">
+            True if the operation should return Operation.Failed on failure, false if it
+            should return the exception produced by MakeMissingMemberError.
+            </param>
+            <param name="errorSuggestion">
+            The meta object to be used if the get results in an error.
+            </param>
+            <returns>
+            Returns a DynamicMetaObject which represents the value that will be returned when the member is accessed.
+            
+            The returned DynamicMetaObject may be strongly typed to a value type which needs boxing before being
+            returned from a standard DLR GetMemberBinder.  The language is responsible for performing any boxing
+            so that it has an opportunity to perform custom boxing.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeOperatorGetMemberBody(Microsoft.Scripting.Actions.DefaultBinder.GetMemberInfo,System.Dynamic.DynamicMetaObject,System.Type,System.String)">
+            <summary> if a member-injector is defined-on or registered-for this type call it </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryConvertToObject(System.Type,System.Type,System.Dynamic.DynamicMetaObject,System.Dynamic.BindingRestrictions)">
+            <summary>
+            Checks if the conversion is to object and produces a target if it is.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryAllConversions(Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,System.Type,Microsoft.Scripting.Actions.ConversionResultKind,System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Checks if any conversions are available and if so builds the target for that conversion.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryAssignableConversion(System.Type,System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Checks if the conversion can be handled by a simple cast.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryUserDefinedConversion(Microsoft.Scripting.Actions.ConversionResultKind,System.Type,System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Checks if the conversion can be handled by calling a user-defined conversion method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryOneConversion(Microsoft.Scripting.Actions.ConversionResultKind,System.Type,System.Type,System.Type,System.String,System.Boolean,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Helper that checkes both types to see if either one defines the specified conversion
+            method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryUserDefinedConversion(Microsoft.Scripting.Actions.ConversionResultKind,System.Type,System.Type,Microsoft.Scripting.Actions.MemberGroup,System.Boolean,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Checks if any of the members of the MemberGroup provide the applicable conversion and 
+            if so uses it to build a conversion rule.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryExtensibleConversion(System.Type,System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Checks if the conversion is to applicable by extracting the value from Extensible of T.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryImplicitNumericConversion(System.Type,System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Checks if there's an implicit numeric conversion for primitive data types.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryNullableConversion(Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,System.Type,Microsoft.Scripting.Actions.ConversionResultKind,System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Checks if there's a conversion to/from Nullable of T.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryNullConversion(System.Type,System.Type,System.Dynamic.BindingRestrictions)">
+            <summary>
+            Checks to see if there's a conversion of null to a reference type
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeErrorTarget(System.Type,Microsoft.Scripting.Actions.ConversionResultKind,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Helper to produce an error when a conversion cannot occur
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeBoxingTarget(System.Dynamic.DynamicMetaObject,System.Dynamic.BindingRestrictions)">
+            <summary>
+            Helper to produce a rule which just boxes a value type
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeConversionTarget(Microsoft.Scripting.Actions.ConversionResultKind,Microsoft.Scripting.Actions.MethodTracker,System.Type,System.Boolean,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Helper to produce a conversion rule by calling the helper method to do the convert
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeExtensibleConversionTarget(Microsoft.Scripting.Actions.ConversionResultKind,Microsoft.Scripting.Actions.MethodTracker,System.Type,System.Boolean,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Helper to produce a conversion rule by calling the helper method to do the convert
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeConversionTargetWorker(Microsoft.Scripting.Actions.ConversionResultKind,Microsoft.Scripting.Actions.MethodTracker,System.Boolean,System.Dynamic.BindingRestrictions,Microsoft.Scripting.Ast.Expression)">
+            <summary>
+            Helper to produce a conversion rule by calling the method to do the convert.  This version takes the parameter
+            to be passed to the conversion function and we call it w/ our own value or w/ our Extensible.Value.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.WrapForThrowingTry(Microsoft.Scripting.Actions.ConversionResultKind,System.Boolean,Microsoft.Scripting.Ast.Expression,System.Type)">
+            <summary>
+            Helper to wrap explicit conversion call into try/catch incase it throws an exception.  If
+            it throws the default value is returned.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeSimpleConversionTarget(System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Helper to produce a rule when no conversion is required (the strong type of the expression
+            input matches the type we're converting to or has an implicit conversion at the IL level)
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeSimpleExtensibleConversionTarget(System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Helper to produce a rule when no conversion is required from an extensible type's
+            underlying storage to the type we're converting to.  The type of extensible type
+            matches the type we're converting to or has an implicit conversion at the IL level.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeExtensibleTarget(System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Helper to extract the value from an Extensible of T
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeNullToNullableOfTTarget(System.Type,System.Dynamic.BindingRestrictions)">
+            <summary>
+            Helper to convert a null value to nullable of T
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeTToNullableOfTTarget(System.Type,System.Type,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Helper to produce the rule for converting T to Nullable of T
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeConvertingToTToNullableOfTTarget(Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,System.Type,Microsoft.Scripting.Actions.ConversionResultKind,System.Dynamic.BindingRestrictions,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Helper to produce the rule for converting T to Nullable of T
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.GetTryConvertReturnValue(System.Type)">
+            <summary>
+            Returns a value which indicates failure when a OldConvertToAction of ImplicitTry or
+            ExplicitTry.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.GetExtensibleValue(System.Type,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Helper to extract the Value of an Extensible of T from the
+            expression being converted.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.GetUnderlyingType(System.Type)">
+            <summary>
+            Helper that checks if fromType is an Extensible of T or a subtype of 
+            Extensible of T and if so returns the T.  Otherwise it returns fromType.
+            
+            This is used to treat extensible types the same as their underlying types.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeNullTarget(System.Type,System.Dynamic.BindingRestrictions)">
+            <summary>
+            Creates a target which returns null for a reference type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.CallMethod(Microsoft.Scripting.Actions.DefaultOverloadResolver,System.Collections.Generic.IList{System.Reflection.MethodBase})">
+            <summary>
+            Performs binding against a set of overloaded methods using the specified arguments.  The arguments are
+            consumed as specified by the CallSignature object.
+            </summary>
+            <param name="resolver">Overload resolver.</param>
+            <param name="targets">The methods to be called</param>
+            <returns>A meta object which results from the call.</returns>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.CallMethod(Microsoft.Scripting.Actions.DefaultOverloadResolver,System.Collections.Generic.IList{System.Reflection.MethodBase},System.String)">
+            <summary>
+            Performs binding against a set of overloaded methods using the specified arguments.  The arguments are
+            consumed as specified by the CallSignature object.
+            </summary>
+            <param name="resolver">Overload resolver.</param>
+            <param name="targets">The methods to be called</param>
+            <param name="name">The name of the method or null to use the name from targets.</param>
+            <returns>A meta object which results from the call.</returns>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.CallMethod(Microsoft.Scripting.Actions.DefaultOverloadResolver,System.Collections.Generic.IList{System.Reflection.MethodBase},System.Dynamic.BindingRestrictions)">
+            <summary>
+            Performs binding against a set of overloaded methods using the specified arguments.  The arguments are
+            consumed as specified by the CallSignature object.
+            </summary>
+            <param name="resolver">Overload resolver.</param>
+            <param name="targets">The methods to be called</param>
+            <param name="restrictions">Additional restrictions which should be applied to the resulting MetaObject.</param>
+            <returns>A meta object which results from the call.</returns>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.CallMethod(Microsoft.Scripting.Actions.DefaultOverloadResolver,System.Collections.Generic.IList{System.Reflection.MethodBase},System.Dynamic.BindingRestrictions,System.String)">
+            <summary>
+            Performs binding against a set of overloaded methods using the specified arguments.  The arguments are
+            consumed as specified by the CallSignature object.
+            </summary>
+            <param name="resolver">Overload resolver.</param>
+            <param name="targets">The methods to be called</param>
+            <param name="restrictions">Additional restrictions which should be applied to the resulting MetaObject.</param>
+            <param name="name">The name of the method or null to use the name from targets.</param>
+            <returns>A meta object which results from the call.</returns>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.CallMethod(Microsoft.Scripting.Actions.DefaultOverloadResolver,System.Collections.Generic.IList{System.Reflection.MethodBase},System.Dynamic.BindingRestrictions,System.String,Microsoft.Scripting.Actions.Calls.NarrowingLevel,Microsoft.Scripting.Actions.Calls.NarrowingLevel,Microsoft.Scripting.Actions.Calls.BindingTarget@)">
+            <summary>
+            Performs binding against a set of overloaded methods using the specified arguments.  The arguments are
+            consumed as specified by the CallSignature object.
+            </summary>
+            <param name="minLevel">TODO.</param>
+            <param name="maxLevel">TODO.</param>
+            <param name="resolver">Overload resolver.</param>
+            <param name="targets">The methods to be called</param>
+            <param name="restrictions">Additional restrictions which should be applied to the resulting MetaObject.</param>
+            <param name="target">The resulting binding target which can be used for producing error information.</param>
+            <param name="name">The name of the method or null to use the name from targets.</param>
+            <returns>A meta object which results from the call.</returns>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeSplatTests(Microsoft.Scripting.Runtime.CallTypes,Microsoft.Scripting.Actions.CallSignature,System.Boolean,System.Collections.Generic.IList{System.Dynamic.DynamicMetaObject})">
+            <summary>
+            Makes test for param arrays and param dictionary parameters.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeParamsArrayTest(Microsoft.Scripting.Runtime.CallTypes,Microsoft.Scripting.Actions.CallSignature,System.Boolean,System.Collections.Generic.IList{System.Dynamic.DynamicMetaObject})">
+            <summary>
+            Pulls out the right argument to build the splat test.  MakeParamsTest makes the actual test.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeParamsTest(System.Dynamic.DynamicMetaObject,System.Boolean)">
+            <summary>
+            Builds the restrictions for calling with a splatted argument array.  Ensures that the
+            argument is still an ICollection of object and that it has the same number of arguments.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeParamsDictionaryTest(System.Collections.Generic.IList{System.Dynamic.DynamicMetaObject},System.Boolean)">
+            <summary>
+            Builds the restrictions for calling with keyword arguments.  The restrictions include
+            tests on the individual keys of the dictionary to ensure they have the same names.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeOperatorDeleteMemberBody(Microsoft.Scripting.Actions.DefaultBinder.SetOrDeleteMemberInfo,System.Dynamic.DynamicMetaObject,System.Type,System.String)">
+            <summary> if a member-injector is defined-on or registered-for this type call it </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.SetMember(System.String,System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Builds a MetaObject for performing a member get.  Supports all built-in .NET members, the OperatorMethod 
+            GetBoundMember, and StrongBox instances.
+            </summary>
+            <param name="name">
+            The name of the member to retrieve.  This name is not processed by the DefaultBinder and
+            is instead handed off to the GetMember API which can do name mangling, case insensitive lookups, etc...
+            </param>
+            <param name="target">
+            The MetaObject from which the member is retrieved.
+            </param>
+            <param name="value">
+            The value being assigned to the target member.
+            </param>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.SetMember(System.String,System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject,Microsoft.Scripting.Actions.Calls.OverloadResolverFactory)">
+            <summary>
+            Builds a MetaObject for performing a member get.  Supports all built-in .NET members, the OperatorMethod 
+            GetBoundMember, and StrongBox instances.
+            </summary>
+            <param name="name">
+            The name of the member to retrieve.  This name is not processed by the DefaultBinder and
+            is instead handed off to the GetMember API which can do name mangling, case insensitive lookups, etc...
+            </param>
+            <param name="target">
+            The MetaObject from which the member is retrieved.
+            </param>
+            <param name="value">
+            The value being assigned to the target member.
+            </param>
+            <param name="resolverFactory">
+            Provides overload resolution and method binding for any calls which need to be performed for the SetMember.
+            </param>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.SetMember(System.String,System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Builds a MetaObject for performing a member get.  Supports all built-in .NET members, the OperatorMethod 
+            GetBoundMember, and StrongBox instances.
+            </summary>
+            <param name="name">
+            The name of the member to retrieve.  This name is not processed by the DefaultBinder and
+            is instead handed off to the GetMember API which can do name mangling, case insensitive lookups, etc...
+            </param>
+            <param name="target">
+            The MetaObject from which the member is retrieved.
+            </param>
+            <param name="value">
+            The value being assigned to the target member.
+            </param>
+            <param name="errorSuggestion">
+            Provides a DynamicMetaObject that is to be used as the result if the member cannot be set.  If null then then a language
+            specific error code is provided by ActionBinder.MakeMissingMemberErrorForAssign which can be overridden by the language.
+            </param>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.SetMember(System.String,System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject,Microsoft.Scripting.Actions.Calls.OverloadResolverFactory)">
+            <summary>
+            Builds a MetaObject for performing a member get.  Supports all built-in .NET members, the OperatorMethod 
+            GetBoundMember, and StrongBox instances.
+            </summary>
+            <param name="name">
+            The name of the member to retrieve.  This name is not processed by the DefaultBinder and
+            is instead handed off to the GetMember API which can do name mangling, case insensitive lookups, etc...
+            </param>
+            <param name="target">
+            The MetaObject from which the member is retrieved.
+            </param>
+            <param name="value">
+            The value being assigned to the target member.
+            </param>
+            <param name="resolverFactory">
+            Provides overload resolution and method binding for any calls which need to be performed for the SetMember.
+            </param>
+            <param name="errorSuggestion">
+            Provides a DynamicMetaObject that is to be used as the result if the member cannot be set.  If null then then a language
+            specific error code is provided by ActionBinder.MakeMissingMemberErrorForAssign which can be overridden by the language.
+            </param>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeOperatorSetMemberBody(Microsoft.Scripting.Actions.DefaultBinder.SetOrDeleteMemberInfo,System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject,System.Type,System.String)">
+            <summary> if a member-injector is defined-on or registered-for this type call it </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeUndeletableMemberError(System.Type,System.String)">
+            <summary>
+            Provides a way for the binder to provide a custom error message when lookup fails.  Just
+            doing this for the time being until we get a more robust error return mechanism.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeNonPublicMemberGetError(Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,Microsoft.Scripting.Actions.MemberTracker,System.Type,System.Dynamic.DynamicMetaObject)">
+            <summary>
+            Called when the user is accessing a protected or private member on a get.
+            
+            The default implementation allows access to the fields or properties using reflection.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.MakeReadOnlyMemberError(System.Type,System.String)">
+            <summary>
+            Provides a way for the binder to provide a custom error message when lookup fails.  Just
+            doing this for the time being until we get a more robust error return mechanism.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.Call(Microsoft.Scripting.Actions.CallSignature,System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject[])">
+            <summary>
+            Provides default binding for performing a call on the specified meta objects.
+            </summary>
+            <param name="signature">The signature describing the call</param>
+            <param name="target">The meta object to be called.</param>
+            <param name="args">
+            Additional meta objects are the parameters for the call as specified by the CallSignature in the CallAction.
+            </param>
+            <returns>A MetaObject representing the call or the error.</returns>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.Call(Microsoft.Scripting.Actions.CallSignature,Microsoft.Scripting.Actions.Calls.OverloadResolverFactory,System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject[])">
+            <summary>
+            Provides default binding for performing a call on the specified meta objects.
+            </summary>
+            <param name="signature">The signature describing the call</param>
+            <param name="target">The meta object to be called.</param>
+            <param name="args">
+            Additional meta objects are the parameters for the call as specified by the CallSignature in the CallAction.
+            </param>
+            <param name="resolverFactory">Overload resolver factory.</param>
+            <returns>A MetaObject representing the call or the error.</returns>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.GetTargetInfo(System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject[])">
+            <summary>
+            Gets a TargetInfo object for performing a call on this object.  
+            
+            If this object is a delegate we bind to the Invoke method.
+            If this object is a MemberGroup or MethodGroup we bind to the methods in the member group.
+            If this object is a BoundMemberTracker we bind to the methods with the bound instance.
+            If the underlying type has defined an operator Call method we'll bind to that method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryGetMethodGroupTargets(System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject[],Microsoft.Scripting.Actions.MethodGroup)">
+            <summary>
+            Binds to the methods in a method group.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryGetMemberGroupTargets(System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject[],Microsoft.Scripting.Actions.MemberGroup)">
+            <summary>
+            Binds to the methods in a member group.  
+            
+            TODO: We should really only have either MemberGroup or MethodGroup, not both.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryGetBoundMemberTargets(System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject[],Microsoft.Scripting.Actions.BoundMemberTracker)">
+            <summary>
+            Binds to the BoundMemberTracker and uses the instance in the tracker and restricts
+            based upon the object instance type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryGetDelegateTargets(System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject[],System.Delegate)">
+            <summary>
+            Binds to the Invoke method on a delegate if this is a delegate type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Actions.DefaultBinder.TryGetOperatorTargets(System.Dynamic.DynamicMetaObject,System.Dynamic.DynamicMetaObject[],System.Object)">
+            <summary>
+            Attempts to bind to an operator Call method.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Scripting.Actions.DefaultBinder.GetMemberInfo">
+            <summary>
+            Helper class for flowing information about the GetMember request.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Scripting.Actions.DefaultBinder.SetOrDeleteMemberInfo">
+            <summary>
+            Helper class for flowing information about the GetMember request.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Scripting.Actions.DefaultBinder.TargetInfo">
+            <summary>
+            Encapsulates information about the target of the call.  This includes an implicit instance for the call,
+            the methods that we'll be calling as well as any restrictions required to perform the call.
+            </summary>
+        </member>
         <member name="T:Microsoft.Scripting.Actions.Calls.ConversionResult">
             <summary>
             Represents information about a failure to convert an argument from one
@@ -2976,6 +3085,42 @@
         <member name="E:Microsoft.Scripting.Interpreter.LightLambda.Compile">
             <summary>
             Provides notification that the LightLambda has been compiled.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Interpreter.CallInstruction.Create(System.Reflection.MethodInfo,System.Reflection.ParameterInfo[])">
+            <summary>
+            Creates a new ReflectedCaller which can be used to quickly invoke the provided MethodInfo.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Interpreter.CallInstruction.TryGetParameterOrReturnType(System.Reflection.MethodInfo,System.Reflection.ParameterInfo[],System.Int32)">
+            <summary>
+            Gets the next type or null if no more types are available.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Interpreter.CallInstruction.SlowCreate(System.Reflection.MethodInfo,System.Reflection.ParameterInfo[])">
+            <summary>
+            Uses reflection to create new instance of the appropriate ReflectedCaller
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Interpreter.CallInstruction.FastCreate(System.Reflection.MethodInfo,System.Reflection.ParameterInfo[])">
+            <summary>
+            Fast creation works if we have a known primitive types for the entire
+            method siganture.  If we have any non-primitive types then FastCreate
+            falls back to SlowCreate which works for all types.
+            
+            Fast creation is fast because it avoids using reflection (MakeGenericType
+            and Activator.CreateInstance) to create the types.  It does this through
+            calling a series of generic methods picking up each strong type of the
+            signature along the way.  When it runs out of types it news up the 
+            appropriate CallInstruction with the strong-types that have been built up.
+            
+            One relaxation is that for return types which are non-primitive types
+            we can fallback to object due to relaxed delegates.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Scripting.Interpreter.CallInstruction.ArgumentCount">
+            <summary>
+            The number of arguments including "this" for instance methods.
             </summary>
         </member>
         <member name="T:Microsoft.Scripting.ComInterop.VariantBuilder">
@@ -3384,30 +3529,10 @@
             Private constructor is never called since 'null' is the only valid instance.
             </summary>
         </member>
-        <member name="T:Microsoft.Scripting.Interpreter.GotoInstruction">
+        <member name="M:Microsoft.Scripting.Interpreter.InterpretedFrame.GroupStackFrames(System.Collections.Generic.IEnumerable{System.Diagnostics.StackFrame})">
             <summary>
-            This instruction implements a goto expression that can jump out of any expression. 
-            It pops values (arguments) from the evaluation stack that the expression tree nodes in between 
-            the goto expression and the target label node pushed and not consumed yet. 
-            A goto expression can jump into a node that evaluates arguments only if it carries 
-            a value and jumps right after the first argument (the carried value will be used as the first argument). 
-            Goto can jump into an arbitrary child of a BlockExpression since the block doesn�t accumulate values 
-            on evaluation stack as its child expressions are being evaluated.
-            
-            Goto needs to execute any finally blocks on the way to the target label.
-            <example>
-            { 
-                f(1, 2, try { g(3, 4, try { goto L } finally { ... }, 6) } finally { ... }, 7, 8)
-                L: ... 
-            }
-            </example>
-            The goto expression here jumps to label L while having 4 items on evaluation stack (1, 2, 3 and 4). 
-            The jump needs to execute both finally blocks, the first one on stack level 4 the 
-            second one on stack level 2. So, it needs to jump the first finally block, pop 2 items from the stack, 
-            run second finally block and pop another 2 items from the stack and set instruction pointer to label L.
-            
-            Goto also needs to rethrow ThreadAbortException iff it jumps out of a catch handler and 
-            the current thread is in "abort requested" state.
+            A single interpreted frame might be represented by multiple subsequent Interpreter.Run CLR frames.
+            This method filters out the duplicate CLR frames.
             </summary>
         </member>
         <member name="T:Microsoft.Scripting.Hosting.Shell.Remote.RemoteRuntimeServer">
@@ -3671,6 +3796,12 @@
             Gets an expression that evaluates to the result of GetByRefArray operation.
             </summary>
         </member>
+        <member name="M:Microsoft.Scripting.Actions.Calls.OverloadResolver.BindToUnexpandedParams(Microsoft.Scripting.Actions.Calls.MethodCandidate)">
+            <summary>
+            Always expand params array/dictionary parameters to simple parameters. 
+            Do not allow an array/dictionary to be passed to params array/dictionary.
+            </summary>
+        </member>
         <member name="M:Microsoft.Scripting.Actions.Calls.OverloadResolver.MapSpecialParameters(Microsoft.Scripting.Actions.Calls.ParameterMapping)">
             <summary>
             Called before arguments binding.
@@ -3928,22 +4059,9 @@
             can be used to throw exceptions from enumerators implemented in IronPython.
             </summary>
         </member>
-        <member name="M:Microsoft.Scripting.Generation.CompilerHelpers.IsMandatoryParameter(System.Reflection.ParameterInfo)">
-            <summary>
-            Returns <c>true</c> if the specified parameter is mandatory, i.e. is not optional and doesn't have a default value.
-            </summary>
-        </member>
         <member name="M:Microsoft.Scripting.Generation.CompilerHelpers.IsConstructor(System.Reflection.MethodBase)">
             <summary>
             True if the MethodBase is method which is going to construct an object
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Generation.CompilerHelpers.IsSealed(System.Type)">
-            <summary>
-            A helper routine to check if a type can be treated as sealed - i.e. there
-            can never be a subtype of this given type.  This corresponds to a type
-            that is either declared "Sealed" or is a ValueType and thus unable to be
-            extended.
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Generation.CompilerHelpers.GetType(System.Object)">
@@ -4010,12 +4128,12 @@
             <param name="lambda">The lambda to compile.</param>
             <returns>A delegate which can interpret the lambda.</returns>
         </member>
-        <member name="M:Microsoft.Scripting.Generation.CompilerHelpers.LightCompile(Microsoft.Scripting.Ast.LambdaExpression,System.Boolean)">
+        <member name="M:Microsoft.Scripting.Generation.CompilerHelpers.LightCompile(Microsoft.Scripting.Ast.LambdaExpression,System.Int32)">
             <summary>
             Creates an interpreted delegate for the lambda.
             </summary>
             <param name="lambda">The lambda to compile.</param>
-            <param name="compileLoops">true if the presence of loops should result in a compiled delegate</param>
+            <param name="compilationThreshold">The number of iterations before the interpreter starts compiling</param>
             <returns>A delegate which can interpret the lambda.</returns>
         </member>
         <member name="M:Microsoft.Scripting.Generation.CompilerHelpers.LightCompile``1(Microsoft.Scripting.Ast.Expression{``0})">
@@ -4026,13 +4144,12 @@
             <param name="lambda">The lambda to compile.</param>
             <returns>A delegate which can interpret the lambda.</returns>
         </member>
-        <member name="M:Microsoft.Scripting.Generation.CompilerHelpers.LightCompile``1(Microsoft.Scripting.Ast.Expression{``0},System.Boolean)">
+        <member name="M:Microsoft.Scripting.Generation.CompilerHelpers.LightCompile``1(Microsoft.Scripting.Ast.Expression{``0},System.Int32)">
             <summary>
             Creates an interpreted delegate for the lambda.
             </summary>
-            <typeparam name="T">The lambda's delegate type.</typeparam>
             <param name="lambda">The lambda to compile.</param>
-            <param name="compileLoops">true if the presence of loops should result in a compiled delegate</param>
+            <param name="compilationThreshold">The number of iterations before the interpreter starts compiling</param>
             <returns>A delegate which can interpret the lambda.</returns>
         </member>
         <member name="M:Microsoft.Scripting.Generation.CompilerHelpers.CompileToMethod(Microsoft.Scripting.Ast.LambdaExpression,System.Reflection.Emit.MethodBuilder,System.Boolean)">
@@ -4345,9 +4462,9 @@
             would do.
             </summary>
         </member>
-        <member name="F:Microsoft.Scripting.Interpreter.LightLambdaClosureVisitor._closureVars">
+        <member name="F:Microsoft.Scripting.Interpreter.LightLambdaClosureVisitor._locals">
             <summary>
-            Indexes of variables into the closure array
+            Local variable mapping.
             </summary>
         </member>
         <member name="F:Microsoft.Scripting.Interpreter.LightLambdaClosureVisitor._closureArray">
@@ -4363,13 +4480,13 @@
             one of our variable instances.
             </summary>
         </member>
-        <member name="M:Microsoft.Scripting.Interpreter.LightLambdaClosureVisitor.BindLambda(Microsoft.Scripting.Ast.LambdaExpression,System.Collections.Generic.IList{Microsoft.Scripting.Ast.ParameterExpression})">
+        <member name="M:Microsoft.Scripting.Interpreter.LightLambdaClosureVisitor.BindLambda(Microsoft.Scripting.Ast.LambdaExpression,Microsoft.Scripting.Interpreter.LocalVariables)">
             <summary>
             Walks the lambda and produces a higher order function, which can be
             used to bind the lambda to a closure array from the interpreter.
             </summary>
             <param name="lambda">The lambda to bind.</param>
-            <param name="closureVars">The variables that are closed over from an outer scope.</param>
+            <param name="locals">Local variables.</param>
             <returns>A delegate that can be called to produce a delegate bound to the passed in closure array.</returns>
         </member>
         <member name="T:Microsoft.Scripting.Interpreter.LightLambdaClosureVisitor.MergedRuntimeVariables">
@@ -4717,6 +4834,11 @@
             Actual arguments cannot be constructed.
             </summary>
         </member>
+        <member name="F:Microsoft.Scripting.Actions.Calls.BindingResult.NoCallableMethod">
+            <summary>
+            No method is callable. For example, all methods have an unbound generic parameter.
+            </summary>
+        </member>
         <member name="T:Microsoft.Scripting.FileStreamContentProvider">
             <summary>
             Provides a StreamContentProvider for a stream of content backed by a file on disk.
@@ -4837,6 +4959,7 @@
             </summary>
         </member>
         <member name="T:Microsoft.Scripting.Interpreter.Interpreter">
+            <summary>
             A simple forth-style stack machine for executing Expression trees
             without the need to compile to IL and then invoke the JIT.  This trades
             off much faster compilation time for a slower execution performance.
@@ -4844,6 +4967,18 @@
             sweet spot.
             
             The core loop in the interpreter is the RunInstructions method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Interpreter.Interpreter.Run(Microsoft.Scripting.Interpreter.InterpretedFrame)">
+            <summary>
+            Runs instructions within the given frame.
+            </summary>
+            <remarks>
+            Interpreted stack frames are linked via Parent reference so that each CLR frame of this method corresponds 
+            to an interpreted stack frame in the chain. It is therefore possible to combine CLR stack traces with 
+            interpreted stack traces by aligning interpreted frames to the frames of this method.
+            Each group of subsequent frames of Run method corresponds to a single interpreted frame.
+            </remarks>
         </member>
         <member name="T:Microsoft.Scripting.Actions.Calls.KeywordConstructorReturnBuilder">
             <summary>
@@ -4858,6 +4993,11 @@
         <member name="M:Microsoft.Scripting.Utils.ReflectionUtils.CreateDelegate(System.Reflection.MethodInfo,System.Type,System.Object)">
             <summary>
             Creates a closed delegate for the given (dynamic)method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Utils.ReflectionUtils.IsMandatory(System.Reflection.ParameterInfo)">
+            <summary>
+            Returns <c>true</c> if the specified parameter is mandatory, i.e. is not optional and doesn't have a default value.
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Utils.ReflectionUtils.GetDeclaredInterfaces(System.Type)">
@@ -5016,21 +5156,6 @@
         <member name="M:Microsoft.Scripting.MutableTuple.Create(Microsoft.Scripting.Ast.Expression[])">
             <summary>
             Provides an expression for creating a tuple with the specified values.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Utils.TypeExtensions.IsSealedOrValueType(System.Type)">
-            <summary>
-            A helper routine to check if a type can be treated as sealed - i.e. there
-            can never be a subtype of this given type.  This corresponds to a type
-            that is either declared "Sealed" or is a ValueType and thus unable to be
-            extended.
-            
-            TODO: this should not be needed. Type.IsSealed does the right thing.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Scripting.Utils.TypeExtensions.IsMandatoryParameter(System.Reflection.ParameterInfo)">
-            <summary>
-            Returns <c>true</c> if the specified parameter is mandatory, i.e. is not optional and doesn't have a default value.
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Hosting.Shell.ConsoleHostOptionsParser.Parse(System.String[])">
@@ -5400,6 +5525,52 @@
             Resizes an array to a speficied new size and copies a portion of the original array into its beginning.
             </summary>
         </member>
+        <member name="T:Microsoft.Scripting.Interpreter.GotoInstruction">
+            <summary>
+            This instruction implements a goto expression that can jump out of any expression. 
+            It pops values (arguments) from the evaluation stack that the expression tree nodes in between 
+            the goto expression and the target label node pushed and not consumed yet. 
+            A goto expression can jump into a node that evaluates arguments only if it carries 
+            a value and jumps right after the first argument (the carried value will be used as the first argument). 
+            Goto can jump into an arbitrary child of a BlockExpression since the block doesn�t accumulate values 
+            on evaluation stack as its child expressions are being evaluated.
+            
+            Goto needs to execute any finally blocks on the way to the target label.
+            <example>
+            { 
+                f(1, 2, try { g(3, 4, try { goto L } finally { ... }, 6) } finally { ... }, 7, 8)
+                L: ... 
+            }
+            </example>
+            The goto expression here jumps to label L while having 4 items on evaluation stack (1, 2, 3 and 4). 
+            The jump needs to execute both finally blocks, the first one on stack level 4 the 
+            second one on stack level 2. So, it needs to jump the first finally block, pop 2 items from the stack, 
+            run second finally block and pop another 2 items from the stack and set instruction pointer to label L.
+            
+            Goto also needs to rethrow ThreadAbortException iff it jumps out of a catch handler and 
+            the current thread is in "abort requested" state.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Scripting.Interpreter.EnterFinallyInstruction">
+            <summary>
+            The first instruction of finally block.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Scripting.Interpreter.LeaveFinallyInstruction">
+            <summary>
+            The last instruction of finally block.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Scripting.Interpreter.LeaveExceptionHandlerInstruction">
+            <summary>
+            The last instruction of a catch exception handler.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Scripting.Interpreter.LeaveFaultInstruction">
+            <summary>
+            The last instruction of a fault exception handler.
+            </summary>
+        </member>
         <member name="T:Microsoft.Scripting.Generation.FieldBuilderExpression">
             <summary>
             Provides a simple expression which enables embedding FieldBuilder's
@@ -5669,6 +5840,11 @@
             <summary>
             The secondary method name associated with the method.  This method name is
             usually a standard .NET method name with pascal casing (e.g. Add).
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Interpreter.InstructionList.SetDebugCookie(System.Object)">
+            <summary>
+            Attaches a cookie to the last emitted instruction.
             </summary>
         </member>
         <member name="T:Microsoft.Scripting.Hosting.Shell.Remote.RemoteCommandDispatcher">

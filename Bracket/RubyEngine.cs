@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Bracket.Hosting;
 using IronRuby;
 using IronRuby.Runtime;
@@ -14,8 +15,8 @@ namespace Bracket
         public RubyEngine()
         {
             ScriptRuntimeSetup rts = ScriptRuntimeSetup.ReadConfiguration();
-            
-            rts.HostType = typeof (BracketScriptHost);
+
+            rts.HostType = typeof(BracketScriptHost);
             rts.AddRubySetup();
             ScriptRuntime runtime = Ruby.CreateRuntime(rts);
             ScriptEngine = Ruby.GetEngine(runtime);
@@ -48,7 +49,12 @@ namespace Bracket
 
         public object ExecuteFile(string fileName)
         {
-            return ScriptEngine.CreateScriptSourceFromString(FindFile(fileName)).Execute(_globalScope);
+            return ScriptEngine.CreateScriptSourceFromFile(FindFile(fileName)).Execute(_globalScope);
+        }
+
+        public object ExecuteFile(string fileName, ScriptScope aScope)
+        {
+            return ScriptEngine.CreateScriptSourceFromFile(FindFile(fileName)).Execute(aScope);
         }
 
         public object Execute(string code)
@@ -82,7 +88,7 @@ namespace Bracket
                 return path;
 
             path = path.Replace("\\", "/");
-            return ScriptEngine.Execute(string.Format(@"$LOAD_PATH.unshift '{0}'",@path));
+            return ScriptEngine.Execute(string.Format(@"$LOAD_PATH.unshift '{0}'", @path));
         }
 
         public void SetConstant(string name, object value)
@@ -103,6 +109,11 @@ namespace Bracket
             return null;
         }
 
+        public ScriptScope CreateScope()
+        {
+            return ScriptEngine.CreateScope();
+        }
+
         private static string TryGetFullPath(string/*!*/ dir, string/*!*/ file)
         {
             try
@@ -114,6 +125,5 @@ namespace Bracket
                 return null;
             }
         }
-    
     }
 }

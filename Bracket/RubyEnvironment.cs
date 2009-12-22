@@ -16,7 +16,8 @@ namespace Bracket
 
         private bool _configured;
 
-        public RubyEnvironment():this(null)
+        public RubyEnvironment()
+            : this(null)
         {
         }
 
@@ -33,7 +34,7 @@ namespace Bracket
                 if (Directory.Exists(configured))
                     ApplicationRootPath = configured;
             }
-                
+
 
             GemPath = DefaultGemPath;
             configured = ConfigurationManager.AppSettings[GemPathConfigurationKey];
@@ -49,7 +50,7 @@ namespace Bracket
         protected void Initialize()
         {
             if (_configured) return;
-            lock(this)
+            lock (this)
             {
                 if (_configured)
                     return;
@@ -58,14 +59,11 @@ namespace Bracket
                 {
                     Engine.AddLoadPath(GemPath);
                 }
-                
+
                 if (!String.IsNullOrEmpty(ApplicationRootPath))
                     Engine.AddLoadPath(ApplicationRootPath);
 
-                Engine.Require("rubygems");
-
                 _configured = true;
-                
             }
         }
     }

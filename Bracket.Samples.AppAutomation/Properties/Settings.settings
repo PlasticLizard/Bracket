@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Bracket.Samples.AppAutomation.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="btnDoSomething_Click_Handler" Type="System.String" Scope="User">
+      <Value Profile="(Default)">context.Alert("Hello from Ruby! You Clicked 'Do Something'")</Value>
+    </Setting>
+    <Setting Name="btnDoSomethingElse_Click_Handler" Type="System.String" Scope="User">
+      <Value Profile="(Default)">"Hello from Ruby! You Clicked 'Do Something Else!'"</Value>
+    </Setting>
+    <Setting Name="txtTypeHere_Validated_Handler" Type="System.String" Scope="User">
+      <Value Profile="(Default)">"You typed #{context.sender.text}"</Value>
+    </Setting>
+    <Setting Name="txtTypeHere_Validating_Handler" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -41,7 +41,7 @@ namespace Bracket.Hosting
                 string normalizedEntry = VirtualFileUtils.NormalizePath(entry.FileName);
                 if (entry.IsDirectory && String.Compare(normalizedEntry, path, true) == 0)
                     return true;
-                if (normalizedEntry.Length > path.Length && normalizedEntry.StartsWith(path))
+                if (normalizedEntry.Length > path.Length && normalizedEntry.StartsWith(path,StringComparison.CurrentCultureIgnoreCase))
                     return true;
             }
             return false;
@@ -202,7 +202,7 @@ namespace Bracket.Hosting
             path = VirtualFileUtils.NormalizePath(path);
             string root = _storagePath;
 
-            if (path.StartsWith(root))
+            if (path.StartsWith(root,StringComparison.CurrentCultureIgnoreCase))
                 path = path.Substring(root.Length);
             return path.TrimStart('\\', '/');
         }

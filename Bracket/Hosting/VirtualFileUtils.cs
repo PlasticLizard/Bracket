@@ -10,10 +10,14 @@ namespace Bracket.Hosting
 {
     public static class VirtualFileUtils
     {
+        public const string OBSCURED_ARCHIVE_EXTENSION = "dlz";
+
         private static readonly Regex PathSeparatorRegex = new Regex(@".*(\\|/)+.*",
                                                                     RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        private static readonly Regex ZipRootRegex = new Regex(@"(([a-z]:(\\|/)|~))?(\w|\s|\\|/|\.|\$|-)*?(\.zip)(?=$|\\|/)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex ZipRootRegex = new Regex(
+            string.Format(@"(([a-z]:(\\|/)|~))?(\w|\s|\\|/|\.|\$|-)*?((\.zip)|(\.{0}))(?=$|\\|/)", OBSCURED_ARCHIVE_EXTENSION),
+            RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public static string ZipFileAtRoot(string path)
         {
@@ -64,7 +68,7 @@ namespace Bracket.Hosting
             if (String.IsNullOrEmpty(path))
                 return path;
             path = RubyUtils.CanonicalizePath(path);
-            return path.TrimEnd(new[] {'\\', '/'});
+            return path.TrimEnd(new[] { '\\', '/' });
         }
     }
 }

@@ -296,7 +296,7 @@
         </member>
         <member name="P:Microsoft.Scripting.Strings.InvalidPath">
             <summary>
-            A string like  "pecified path is invalid."
+            A string like  "Specified path is invalid."
             </summary>
         </member>
         <member name="P:Microsoft.Scripting.Strings.DictionaryNotHashable">
@@ -486,7 +486,7 @@
         </member>
         <member name="M:Microsoft.Scripting.Error.InvalidPath">
             <summary>
-            ArgumentException with message like "pecified path is invalid."
+            ArgumentException with message like "Specified path is invalid."
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Error.DictionaryNotHashable">
@@ -773,6 +773,17 @@
             <returns><b>null</b> on failure.</returns>
             <remarks>Could also set the code properties and line/file mappings on the source unit.</remarks>
         </member>
+        <member name="M:Microsoft.Scripting.Runtime.LanguageContext.CreateConvertBinder(System.Type,System.Nullable{System.Boolean})">
+            <summary>
+            Creates a conversion binder.
+            
+            If explicitCast is true then the binder should do explicit conversions.
+            If explicitCast is false then the binder should do implicit conversions.
+            
+            If explicitCast is null it is up to the language to select the conversions
+            which closest match their normal behavior.
+            </summary>
+        </member>
         <member name="M:Microsoft.Scripting.Runtime.LanguageContext.GetMemberNames(System.Object)">
             <summary>
             Gets the member names associated with the object
@@ -810,6 +821,35 @@
             They are provided for other hosting API implementers that would like to leverage existing HAPI and 
             extend it with language specific functionality, for example. 
             </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetDomainManager(Microsoft.Scripting.Hosting.ScriptRuntime)">
+            <exception cref="T:System.ArgumentNullException"><paramref name="runtime"/> is a <c>null</c> reference.</exception>
+            <exception cref="T:System.Runtime.Serialization.SerializationException"><paramref name="runtime"/> is remote.</exception>
+        </member>
+        <member name="M:Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetLanguageContext(Microsoft.Scripting.Hosting.ScriptEngine)">
+            <exception cref="T:System.ArgumentNullException"><paramref name="engine"/>e is a <c>null</c> reference.</exception>
+            <exception cref="T:System.Runtime.Serialization.SerializationException"><paramref name="engine"/> is remote.</exception>
+        </member>
+        <member name="M:Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetSourceUnit(Microsoft.Scripting.Hosting.ScriptSource)">
+            <exception cref="T:System.ArgumentNullException"><paramref name="scriptSource"/> is a <c>null</c> reference.</exception>
+            <exception cref="T:System.Runtime.Serialization.SerializationException"><paramref name="scriptSource"/> is remote.</exception>
+        </member>
+        <member name="M:Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetScriptCode(Microsoft.Scripting.Hosting.CompiledCode)">
+            <exception cref="T:System.ArgumentNullException"><paramref name="compiledCode"/> is a <c>null</c> reference.</exception>
+            <exception cref="T:System.Runtime.Serialization.SerializationException"><paramref name="compiledCode"/> is remote.</exception>
+        </member>
+        <member name="M:Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetSharedIO(Microsoft.Scripting.Hosting.ScriptIO)">
+            <exception cref="T:System.ArgumentNullException"><paramref name="io"/> is a <c>null</c> reference.</exception>
+            <exception cref="T:System.Runtime.Serialization.SerializationException"><paramref name="io"/> is remote.</exception>
+        </member>
+        <member name="M:Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetScope(Microsoft.Scripting.Hosting.ScriptScope)">
+            <exception cref="T:System.ArgumentNullException"><paramref name="scriptScope"/> is a <c>null</c> reference.</exception>
+            <exception cref="T:System.Runtime.Serialization.SerializationException"><paramref name="scriptScope"/> is remote.</exception>
+        </member>
+        <member name="M:Microsoft.Scripting.Hosting.Providers.HostingHelpers.CreateScriptScope(Microsoft.Scripting.Hosting.ScriptEngine,Microsoft.Scripting.Runtime.Scope)">
+            <exception cref="T:System.ArgumentNullException"><paramref name="engine"/> is a <c>null</c> reference.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="scope"/> is a <c>null</c> reference.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="engine"/> is a transparent proxy.</exception>
         </member>
         <member name="M:Microsoft.Scripting.Hosting.Providers.HostingHelpers.CallEngine``2(Microsoft.Scripting.Hosting.ScriptEngine,Microsoft.Scripting.Utils.Func{Microsoft.Scripting.Runtime.LanguageContext,``0,``1},``0)">
             <summary>
@@ -1409,22 +1449,28 @@
         </member>
         <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.ConvertTo``1(System.Object)">
             <summary>
-            Convers the object obj to the type T.
+            Converts the object obj to the type T.  The conversion will be explicit or implicit depending on 
+            what the langauge prefers.
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.ConvertTo(System.Object,System.Type)">
             <summary>
-            Converts the object obj to the type type.
+            Converts the object obj to the type type. The conversion will be explicit or implicit depending on 
+            what the langauge prefers.
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.TryConvertTo``1(System.Object,``0@)">
             <summary>
             Converts the object obj to the type T.  Returns true if the value can be converted, false if it cannot.
+            
+            The conversion will be explicit or implicit depending on what the langauge prefers.
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.TryConvertTo(System.Object,System.Type,System.Object@)">
             <summary>
             Converts the object obj to the type type.  Returns true if the value can be converted, false if it cannot.
+            
+            The conversion will be explicit or implicit depending on what the langauge prefers.
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.ExplicitConvertTo``1(System.Object)">
@@ -1447,6 +1493,30 @@
         <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.TryExplicitConvertTo(System.Object,System.Type,System.Object@)">
             <summary>
             Converts the object obj to the type type including explicit conversions which may lose information.  
+            
+            Returns true if the value can be converted, false if it cannot.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.ImplicitConvertTo``1(System.Object)">
+            <summary>
+            Converts the object obj to the type T including implicit conversions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.ImplicitConvertTo(System.Object,System.Type)">
+            <summary>
+            Converts the object obj to the type type including implicit conversions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.TryImplicitConvertTo``1(System.Object,``0@)">
+            <summary>
+            Converts the object obj to the type T including implicit conversions.
+            
+            Returns true if the value can be converted, false if it cannot.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.TryImplicitConvertTo(System.Object,System.Type,System.Object@)">
+            <summary>
+            Converts the object obj to the type type including implicit conversions.  
             
             Returns true if the value can be converted, false if it cannot.
             </summary>
@@ -1722,27 +1792,31 @@
         <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.ConvertTo``1(System.Runtime.Remoting.ObjectHandle)">
             <summary>
             Converts the remote object into the specified type returning a handle to
-            the new remote object.
+            the new remote object. The conversion will be explicit or implicit depending on 
+            what the langauge prefers.
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.ConvertTo(System.Runtime.Remoting.ObjectHandle,System.Type)">
             <summary>
             Converts the remote object into the specified type returning a handle to
-            the new remote object.
+            the new remote object. The conversion will be explicit or implicit depending on 
+            what the langauge prefers.
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.TryConvertTo``1(System.Runtime.Remoting.ObjectHandle,System.Runtime.Remoting.ObjectHandle@)">
             <summary>
             Converts the remote object into the specified type returning a handle to
             the new remote object. Returns true if the value can be converted,
-            false if it cannot.
+            false if it cannot. The conversion will be explicit or implicit depending on 
+            what the langauge prefers.
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.TryConvertTo(System.Runtime.Remoting.ObjectHandle,System.Type,System.Runtime.Remoting.ObjectHandle@)">
             <summary>
             Converts the remote object into the specified type returning a handle to
             the new remote object. Returns true if the value can be converted,
-            false if it cannot.
+            false if it cannot. The conversion will be explicit or implicit depending on 
+            what the langauge prefers.
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.ExplicitConvertTo``1(System.Runtime.Remoting.ObjectHandle)">
@@ -1765,6 +1839,30 @@
         <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.TryExplicitConvertTo(System.Runtime.Remoting.ObjectHandle,System.Type,System.Runtime.Remoting.ObjectHandle@)">
             <summary>
             Converts the object obj to the type type including explicit conversions which may lose information.  
+            
+            Returns true if the value can be converted, false if it cannot.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.ImplicitConvertTo``1(System.Runtime.Remoting.ObjectHandle)">
+            <summary>
+            Converts the object obj to the type T including implicit conversions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.ImplicitConvertTo(System.Runtime.Remoting.ObjectHandle,System.Type)">
+            <summary>
+            Converts the object obj to the type type including implicit conversions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.TryImplicitConvertTo``1(System.Runtime.Remoting.ObjectHandle,System.Runtime.Remoting.ObjectHandle@)">
+            <summary>
+            Converts the object obj to the type T including implicit conversions.
+            
+            Returns true if the value can be converted, false if it cannot.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Hosting.ObjectOperations.TryImplicitConvertTo(System.Runtime.Remoting.ObjectHandle,System.Type,System.Runtime.Remoting.ObjectHandle@)">
+            <summary>
+            Converts the object obj to the type type including implicit conversions.  
             
             Returns true if the value can be converted, false if it cannot.
             </summary>
@@ -2209,8 +2307,8 @@
         </member>
         <member name="M:Microsoft.Scripting.Runtime.DynamicOperations.GetMember``1(System.Object,System.String,System.Boolean)">
             <summary>
-            Gets the member name from the object obj and converts it to the type T.  Throws an exception if the
-            member does not exist, is write-only, or cannot be converted.
+            Gets the member name from the object obj and converts it to the type T. The conversion will be explicit or implicit
+            depending on what the langauge prefers. Throws an exception if the member does not exist, is write-only, or cannot be converted.
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Runtime.DynamicOperations.TryGetMember(System.Object,System.String,System.Boolean,System.Object@)">
@@ -2243,22 +2341,28 @@
         </member>
         <member name="M:Microsoft.Scripting.Runtime.DynamicOperations.ConvertTo``1(System.Object)">
             <summary>
-            Convers the object obj to the type T.
+            Converts the object obj to the type T.  The conversion will be explicit or implicit
+            depending on what the langauge prefers.
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Runtime.DynamicOperations.ConvertTo(System.Object,System.Type)">
-            <summary>
-            Converts the object obj to the type type.
+            <summary> 
+            Converts the object obj to the type type.  The conversion will be explicit or implicit
+            depending on what the langauge prefers.
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Runtime.DynamicOperations.TryConvertTo``1(System.Object,``0@)">
             <summary>
             Converts the object obj to the type T.  Returns true if the value can be converted, false if it cannot.
+            
+            The conversion will be explicit or implicit depending on what the langauge prefers.
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Runtime.DynamicOperations.TryConvertTo(System.Object,System.Type,System.Object@)">
             <summary>
             Converts the object obj to the type type.  Returns true if the value can be converted, false if it cannot.
+            
+            The conversion will be explicit or implicit depending on what the langauge prefers.
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Runtime.DynamicOperations.ExplicitConvertTo``1(System.Object)">
@@ -2279,6 +2383,28 @@
             </summary>
         </member>
         <member name="M:Microsoft.Scripting.Runtime.DynamicOperations.TryExplicitConvertTo``1(System.Object,``0@)">
+            <summary>
+            Converts the object obj to the type T.  Returns true if the value can be converted, false if it cannot.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Runtime.DynamicOperations.ImplicitConvertTo``1(System.Object)">
+            <summary>
+            Convers the object obj to the type T including implicit conversions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Runtime.DynamicOperations.ImplicitConvertTo(System.Object,System.Type)">
+            <summary>
+            Converts the object obj to the type type including implicit conversions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Runtime.DynamicOperations.TryImplicitConvertTo(System.Object,System.Type,System.Object@)">
+            <summary>
+            Converts the object obj to the type type including implicit conversions. 
+            
+            Returns true if the value can be converted, false if it cannot.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Scripting.Runtime.DynamicOperations.TryImplicitConvertTo``1(System.Object,``0@)">
             <summary>
             Converts the object obj to the type T.  Returns true if the value can be converted, false if it cannot.
             </summary>
@@ -3621,6 +3747,11 @@
             <summary>
             Dynamically choose between interpreting, simple compilation and compilation
             that takes advantage of runtime history.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Scripting.LanguageOptions.CompilationThreshold">
+            <summary>
+            The number of iterations before the interpreter starts compiling.s
             </summary>
         </member>
         <member name="P:Microsoft.Scripting.LanguageOptions.ExceptionDetail">

@@ -9,8 +9,8 @@ namespace Bracket
     public class Rack
     {
         private readonly object _rackApplication;
-      
-        public Rack() : this(new RubyEnvironment()){}
+
+        public Rack() : this(new RubyEnvironment()) { }
 
         public Rack(RubyEnvironment environment)
         {
@@ -20,11 +20,11 @@ namespace Bracket
 
         public RubyEnvironment Ruby { get; private set; }
 
-        public void HandleRequest(RackRequest rackRequest,RackResponse response)
+        public void HandleRequest(RackRequest rackRequest, RackResponse response)
         {
             ScriptScope requestScope;
             //TODO:Probably not necessary
-            lock(this)
+            lock (this)
                 requestScope = Ruby.Engine.ScriptEngine.CreateScope();
 
             Hash envHash = rackRequest.ToRubyHash(Ruby.Engine.Context);
@@ -48,7 +48,7 @@ namespace Bracket
                 requestScope.SetVariable("__body__", rubyResponse[2]);
                 requestScope.SetVariable("__response__", response);
                 Ruby.Engine.Execute("__body__.each { |part| __response__.write part  }", requestScope);
-                
+
                 response.Flush();
 
             }
@@ -61,6 +61,7 @@ namespace Bracket
 
         private object Rackup()
         {
+            Ruby.Engine.Require("rubygems");
             Ruby.Engine.Require("rack");
             var fullPath = Ruby.Engine.FindFile("config.ru");
             if (fullPath != null)
