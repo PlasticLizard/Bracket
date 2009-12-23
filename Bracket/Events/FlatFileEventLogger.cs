@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace Bracket.Events
 {
    public class FlatFileEventLogger : IBracketEventLogger, IDisposable
    {
-       public const string DefaultLogFileName = "bracket_events.log";
+       public static readonly string DefaultLogFileName = 
+           Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bracket_events.log");
        private readonly object _queueLock = new object();
        private readonly string _logFileName;
        private readonly Queue<BracketEvent> _logEntryQueue = new Queue<BracketEvent>();

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Bracket.Events
 {
@@ -62,6 +59,11 @@ namespace Bracket.Events
                           EventDescription = error.ToString(),
                           EventName = BracketEvents.Exception
                       });
+        }
+
+        public static void Trace(object source, string description)
+        {
+            PublishEvent(source, BracketEventType.Trace, BracketEvents.Info, description);
         }
 
         public BracketEvent()

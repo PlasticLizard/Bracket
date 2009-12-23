@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using Bracket.Events;
 using IronRuby.Runtime;
 using Microsoft.Scripting;
@@ -63,6 +62,7 @@ namespace Bracket.Hosting
 
         public override Assembly LoadAssemblyFromPath(string path)
         {
+            BracketEvent.Trace(this,String.Format("Loading assembly: {0}", path));
             path = ExpandPath(path);
 
             IVirtualDirectory dir = GetVirtualDirectoryForPath(path);

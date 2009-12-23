@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Bracket.Events;
 using Bracket.Hosting;
 using IronRuby;
 using IronRuby.Runtime;
@@ -84,6 +85,7 @@ namespace Bracket
 
         public object AddLoadPath(string path)
         {
+            BracketEvent.Trace(this, String.Format("Add load path: {0}", path));
             if (string.IsNullOrEmpty(path))
                 return path;
 
