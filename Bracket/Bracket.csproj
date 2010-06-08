@@ -39,25 +39,33 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalDependencies\Ionic.Zip.Reduced.dll</HintPath>
     </Reference>
-    <Reference Include="IronRuby, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="IronRuby, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalDependencies\IronRuby.dll</HintPath>
     </Reference>
-    <Reference Include="IronRuby.Libraries, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="IronRuby.Libraries, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalDependencies\IronRuby.Libraries.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamic, Version=0.9.6.20, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Dynamic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalDependencies\Microsoft.Dynamic.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Scripting, Version=0.9.6.20, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Scripting, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalDependencies\Microsoft.Scripting.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Scripting.Core, Version=0.9.6.20, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Scripting.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalDependencies\Microsoft.Scripting.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.Debugging, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalDependencies\Microsoft.Scripting.Debugging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.ExtensionAttribute, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalDependencies\Microsoft.Scripting.ExtensionAttribute.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -101,7 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="IronRuby.Libraries.Yaml.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

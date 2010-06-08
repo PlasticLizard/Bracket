@@ -74,9 +74,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
-    <None Include="IronRuby.zip">
+    <Content Include="IronRuby.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.grpServerLib = new System.Windows.Forms.GroupBox();
-            this.radAzure = new System.Windows.Forms.RadioButton();
-            this.radKayak = new System.Windows.Forms.RadioButton();
             this.radFramework = new System.Windows.Forms.RadioButton();
             this.radBracket = new System.Windows.Forms.RadioButton();
             this.btnStartServer = new System.Windows.Forms.Button();
@@ -44,31 +42,17 @@
             this.txtOutput = new System.Windows.Forms.TextBox();
             this.btnStopServer = new System.Windows.Forms.Button();
             this.grpApplicationType = new System.Windows.Forms.GroupBox();
-            this.radRails = new System.Windows.Forms.RadioButton();
             this.radSinatraApp = new System.Windows.Forms.RadioButton();
             this.radRackApp = new System.Windows.Forms.RadioButton();
-            this.grpAzureSettings = new System.Windows.Forms.GroupBox();
-            this.txtUrlNamespace = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.chkUseSsl = new System.Windows.Forms.CheckBox();
-            this.txtSlnPassword = new System.Windows.Forms.TextBox();
-            this.txtSlnName = new System.Windows.Forms.TextBox();
-            this.txtIssuerName = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.grpServerLib.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.grpOutput.SuspendLayout();
             this.grpApplicationType.SuspendLayout();
-            this.grpAzureSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpServerLib
             // 
-            this.grpServerLib.Controls.Add(this.radAzure);
-            this.grpServerLib.Controls.Add(this.radKayak);
             this.grpServerLib.Controls.Add(this.radFramework);
             this.grpServerLib.Controls.Add(this.radBracket);
             this.grpServerLib.Location = new System.Drawing.Point(12, 12);
@@ -77,27 +61,6 @@
             this.grpServerLib.TabIndex = 0;
             this.grpServerLib.TabStop = false;
             this.grpServerLib.Text = "Hosting Library";
-            // 
-            // radAzure
-            // 
-            this.radAzure.AutoSize = true;
-            this.radAzure.Location = new System.Drawing.Point(6, 88);
-            this.radAzure.Name = "radAzure";
-            this.radAzure.Size = new System.Drawing.Size(112, 17);
-            this.radAzure.TabIndex = 0;
-            this.radAzure.Text = "Azure Service Bus";
-            this.radAzure.UseVisualStyleBackColor = true;
-            this.radAzure.CheckedChanged += new System.EventHandler(this.radAzure_CheckedChanged);
-            // 
-            // radKayak
-            // 
-            this.radKayak.AutoSize = true;
-            this.radKayak.Location = new System.Drawing.Point(6, 65);
-            this.radKayak.Name = "radKayak";
-            this.radKayak.Size = new System.Drawing.Size(55, 17);
-            this.radKayak.TabIndex = 0;
-            this.radKayak.Text = "Kayak";
-            this.radKayak.UseVisualStyleBackColor = true;
             // 
             // radFramework
             // 
@@ -226,7 +189,6 @@
             // 
             // grpApplicationType
             // 
-            this.grpApplicationType.Controls.Add(this.radRails);
             this.grpApplicationType.Controls.Add(this.radSinatraApp);
             this.grpApplicationType.Controls.Add(this.radRackApp);
             this.grpApplicationType.Location = new System.Drawing.Point(12, 138);
@@ -235,16 +197,6 @@
             this.grpApplicationType.TabIndex = 4;
             this.grpApplicationType.TabStop = false;
             this.grpApplicationType.Text = "Rack Flavor";
-            // 
-            // radRails
-            // 
-            this.radRails.AutoSize = true;
-            this.radRails.Location = new System.Drawing.Point(6, 65);
-            this.radRails.Name = "radRails";
-            this.radRails.Size = new System.Drawing.Size(48, 17);
-            this.radRails.TabIndex = 0;
-            this.radRails.Text = "Rails";
-            this.radRails.UseVisualStyleBackColor = true;
             // 
             // radSinatraApp
             // 
@@ -268,109 +220,11 @@
             this.radRackApp.Text = "Generic Rack Application";
             this.radRackApp.UseVisualStyleBackColor = true;
             // 
-            // grpAzureSettings
-            // 
-            this.grpAzureSettings.Controls.Add(this.txtUrlNamespace);
-            this.grpAzureSettings.Controls.Add(this.label3);
-            this.grpAzureSettings.Controls.Add(this.label2);
-            this.grpAzureSettings.Controls.Add(this.label4);
-            this.grpAzureSettings.Controls.Add(this.label1);
-            this.grpAzureSettings.Controls.Add(this.chkUseSsl);
-            this.grpAzureSettings.Controls.Add(this.txtSlnPassword);
-            this.grpAzureSettings.Controls.Add(this.txtIssuerName);
-            this.grpAzureSettings.Controls.Add(this.txtSlnName);
-            this.grpAzureSettings.Enabled = false;
-            this.grpAzureSettings.Location = new System.Drawing.Point(12, 326);
-            this.grpAzureSettings.Name = "grpAzureSettings";
-            this.grpAzureSettings.Size = new System.Drawing.Size(218, 211);
-            this.grpAzureSettings.TabIndex = 5;
-            this.grpAzureSettings.TabStop = false;
-            this.grpAzureSettings.Text = "Azure Service Bus Settings";
-            // 
-            // txtUrlNamespace
-            // 
-            this.txtUrlNamespace.Location = new System.Drawing.Point(84, 95);
-            this.txtUrlNamespace.Name = "txtUrlNamespace";
-            this.txtUrlNamespace.Size = new System.Drawing.Size(128, 20);
-            this.txtUrlNamespace.TabIndex = 0;
-            this.txtUrlNamespace.Text = "Bracket";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 98);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Service Path:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 72);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Issuer Secret:";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Sevice:";
-            // 
-            // chkUseSsl
-            // 
-            this.chkUseSsl.AutoSize = true;
-            this.chkUseSsl.Location = new System.Drawing.Point(84, 121);
-            this.chkUseSsl.Name = "chkUseSsl";
-            this.chkUseSsl.Size = new System.Drawing.Size(68, 17);
-            this.chkUseSsl.TabIndex = 1;
-            this.chkUseSsl.Text = "Use SSL";
-            this.chkUseSsl.UseVisualStyleBackColor = true;
-            // 
-            // txtSlnPassword
-            // 
-            this.txtSlnPassword.Location = new System.Drawing.Point(84, 69);
-            this.txtSlnPassword.Name = "txtSlnPassword";
-            this.txtSlnPassword.Size = new System.Drawing.Size(128, 20);
-            this.txtSlnPassword.TabIndex = 0;
-            this.txtSlnPassword.Text = "my secret";
-            // 
-            // txtSlnName
-            // 
-            this.txtSlnName.Location = new System.Drawing.Point(84, 19);
-            this.txtSlnName.Name = "txtSlnName";
-            this.txtSlnName.Size = new System.Drawing.Size(128, 20);
-            this.txtSlnName.TabIndex = 0;
-            this.txtSlnName.Text = "MyServiceBus";
-            // 
-            // txtIssuerName
-            // 
-            this.txtIssuerName.Location = new System.Drawing.Point(84, 45);
-            this.txtIssuerName.Name = "txtIssuerName";
-            this.txtIssuerName.Size = new System.Drawing.Size(128, 20);
-            this.txtIssuerName.TabIndex = 0;
-            this.txtIssuerName.Text = "owner";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 48);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(69, 13);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Issuer Name:";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(956, 552);
-            this.Controls.Add(this.grpAzureSettings);
             this.Controls.Add(this.grpApplicationType);
             this.Controls.Add(this.grpOutput);
             this.Controls.Add(this.groupBox2);
@@ -388,8 +242,6 @@
             this.grpOutput.PerformLayout();
             this.grpApplicationType.ResumeLayout(false);
             this.grpApplicationType.PerformLayout();
-            this.grpAzureSettings.ResumeLayout(false);
-            this.grpAzureSettings.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -397,7 +249,6 @@
         #endregion
 
         private System.Windows.Forms.GroupBox grpServerLib;
-        private System.Windows.Forms.RadioButton radKayak;
         private System.Windows.Forms.RadioButton radFramework;
         private System.Windows.Forms.RadioButton radBracket;
         private System.Windows.Forms.Button btnStartServer;
@@ -412,19 +263,7 @@
         private System.Windows.Forms.GroupBox grpApplicationType;
         private System.Windows.Forms.RadioButton radSinatraApp;
         private System.Windows.Forms.RadioButton radRackApp;
-        private System.Windows.Forms.RadioButton radRails;
         private System.Windows.Forms.Button btnOpenInBrowser;
-        private System.Windows.Forms.RadioButton radAzure;
-        private System.Windows.Forms.GroupBox grpAzureSettings;
-        private System.Windows.Forms.CheckBox chkUseSsl;
-        private System.Windows.Forms.TextBox txtUrlNamespace;
-        private System.Windows.Forms.TextBox txtSlnPassword;
-        private System.Windows.Forms.TextBox txtSlnName;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtIssuerName;
     }
 }
 

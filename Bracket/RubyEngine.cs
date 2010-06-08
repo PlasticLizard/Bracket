@@ -10,6 +10,11 @@ namespace Bracket
 {
     public class RubyEngine
     {
+        private static RubyContext GetExecutionContext(ScriptEngine engine)
+        {
+            return Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetLanguageContext(engine) as RubyContext;
+        }
+
         public ScriptEngine ScriptEngine { get; private set; }
         private readonly ScriptScope _globalScope;
 
@@ -28,7 +33,7 @@ namespace Bracket
         {
             get
             {
-                return Ruby.GetExecutionContext(ScriptEngine);
+                return GetExecutionContext(ScriptEngine);   
             }
         }
 

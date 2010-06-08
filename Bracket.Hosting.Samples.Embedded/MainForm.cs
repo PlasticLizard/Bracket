@@ -3,13 +3,10 @@ using System.Diagnostics;
 using System.Net;
 using System.Windows.Forms;
 using Bracket.Events;
-using Bracket.Hosting.Azure.ServiceBus;
 using Bracket.Hosting.Default;
-using Bracket.Hosting.Kayak;
 using Bracket.Hosting.Samples.Embedded.Properties;
 using Bracket.Hosting.SystemWeb;
 using HttpServer;
-using Microsoft.ServiceBus;
 
 namespace Bracket.Hosting.Samples.Embedded
 {
@@ -17,8 +14,6 @@ namespace Bracket.Hosting.Samples.Embedded
     {
         private DefaultRackServer _bracketServer;
         private HttpListenerRackServer _frameworkServer;
-        private KayakRackServer _kayakServer;
-        private RackServiceHost _azureServer;
 
         private readonly TextBoxLogWriter _logWriter;
 
@@ -27,12 +22,7 @@ namespace Bracket.Hosting.Samples.Embedded
             InitializeComponent();
             _logWriter = new TextBoxLogWriter(txtOutput);
 
-            txtSlnName.Text = Settings.Default.AzureServiceBusServiceNamespace;
-            txtSlnPassword.Text = Settings.Default.AzureServiceBusIssuerSecret;
-            txtUrlNamespace.Text = Settings.Default.AzureServiceBusServicePath;
-            chkUseSsl.Checked = Settings.Default.AzureServiceBusUseSSL;
-            txtIssuerName.Text = Settings.Default.AzureServiceBusIssuerName;
-
+          
             //BracketEvent.LogAllEvents = true;
             //BracketEvent.Event += BracketEvent_Event;
         }
@@ -45,28 +35,14 @@ namespace Bracket.Hosting.Samples.Embedded
            if(radBracket.Checked)
            {
                _bracketServer = new DefaultRackServer(9876, IPAddress.Any, _logWriter);
-               _bracketServer.Start(new RubyEnvironment((env) => env.ApplicationRootPath = appName));
+               _bracketServer.Start(new RubyEnvironment(env => env.ApplicationRootPath = appName));
            }
            else if (radFramework.Checked)
            {
                _frameworkServer = new HttpListenerRackServer(9876);
-               _frameworkServer.Start(new RubyEnvironment((env) => env.ApplicationRootPath = appName));
+               _frameworkServer.Start(new RubyEnvironment(env => env.ApplicationRootPath = appName));
            }
-           else if (radKayak.Checked)
-           {
-               _kayakServer = new KayakRackServer(9876);
-               _kayakServer.Start(new RubyEnvironment((env) => env.ApplicationRootPath = appName));
-           }
-           else if (radAzure.Checked)
-           {
-               _azureServer = new RackServiceHost(txtSlnName.Text, txtIssuerName.Text, txtSlnPassword.Text, txtUrlNamespace.Text,
-                                                  chkUseSsl.Checked);
-               _azureServer.Start(new RubyEnvironment((env) => env.ApplicationRootPath = appName));
-
-               txtUrl.Text = ServiceBusEnvironment.CreateServiceUri(chkUseSsl.Checked ? "https" : "http",
-                                                                    txtSlnName.Text, txtUrlNamespace.Text).ToString();
-           }
-
+          
             _logWriter.Write(this, LogPrio.Info, SelectedFrameworkName + " Started!");
 
             btnBrowserNavigate.PerformClick();
@@ -75,7 +51,6 @@ namespace Bracket.Hosting.Samples.Embedded
             grpApplicationType.Enabled = false;
             btnStartServer.Enabled = false;
             btnStopServer.Enabled = true;
-            grpAzureSettings.Enabled = false;
 
         }
 
@@ -98,20 +73,7 @@ namespace Bracket.Hosting.Samples.Embedded
                     _frameworkServer.Dispose();
                 _frameworkServer = null;
             }
-            else if (radKayak.Checked)
-            {
-                if (_kayakServer != null)
-                    _kayakServer.Dispose();
-                _kayakServer = null;
-            }
-            else if (radAzure.Checked)
-            {
-                if(_azureServer != null)
-                    _azureServer.Dispose();
-                _azureServer = null;
-                grpAzureSettings.Enabled = true;
-            }
-
+          
             _logWriter.Write(this, LogPrio.Info,SelectedFrameworkName + " Stopped.");
 
             grpServerLib.Enabled = true;
@@ -138,7 +100,7 @@ namespace Bracket.Hosting.Samples.Embedded
             if (webBrowser.Url == new Uri(txtUrl.Text))
                 webBrowser.Refresh(WebBrowserRefreshOption.Completely);
             else
-                webBrowser.Navigate(this.txtUrl.Text);
+                webBrowser.Navigate(txtUrl.Text);
         }
 
         protected override void OnClosed(EventArgs e)
@@ -148,16 +110,7 @@ namespace Bracket.Hosting.Samples.Embedded
                 _bracketServer.Dispose();
             if (_frameworkServer != null)
                 _frameworkServer.Dispose();
-            if(_kayakServer != null)
-                _kayakServer.Dispose();
-            if (_azureServer != null)
-                _azureServer.Dispose();
-
-            Settings.Default.AzureServiceBusServiceNamespace = txtSlnName.Text;
-            Settings.Default.AzureServiceBusIssuerSecret = txtSlnPassword.Text;
-            Settings.Default.AzureServiceBusServicePath = txtUrlNamespace.Text;
-            Settings.Default.AzureServiceBusUseSSL = chkUseSsl.Checked;
-            Settings.Default.AzureServiceBusIssuerName = txtIssuerName.Text;
+            
             Settings.Default.Save();
 
         }
@@ -166,16 +119,6 @@ namespace Bracket.Hosting.Samples.Embedded
         {
             if (!String.IsNullOrEmpty(txtUrl.Text))
             Process.Start(txtUrl.Text);
-        }
-
-        void BracketEvent_Event(object sender, BracketEvent e)
-        {
-            _logWriter.Write(this, LogPrio.Info, e.ToString());
-        }
-
-        private void radAzure_CheckedChanged(object sender, EventArgs e)
-        {
-            grpAzureSettings.Enabled = radAzure.Checked;
         }
     }
 }
