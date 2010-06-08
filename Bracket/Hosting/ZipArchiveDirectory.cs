@@ -53,7 +53,7 @@ namespace Bracket.Hosting
             return entry != null && entry.IsDirectory == false;
         }
 
-        public string[] GetDirectories(string path, string searchPattern)
+        public string[] GetDirectoryEntires(string path, string searchPattern)
         {
             //TODO:Ignoring searchPattern for the moment
             if (searchPattern != "*")
@@ -104,7 +104,7 @@ namespace Bracket.Hosting
 
         }
 
-        public string[] GetFiles(string path, string searchPattern)
+        public string[] GetFileEntries(string path, string searchPattern)
         {
             //TODO:Ignoring searchPattern for the moment
             if (searchPattern != "*")

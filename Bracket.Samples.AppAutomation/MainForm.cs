@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Bracket.Samples.AppAutomation.Properties;
 using Microsoft.Scripting.Hosting;
@@ -58,7 +53,7 @@ namespace Bracket.Samples.AppAutomation
             var ctx = new ScriptContext {EventName = eventName, Sender = sender, Args = args, Host = this};
             ScriptScope scope = _scriptHost.Engine.CreateScope();
             scope.SetVariable("context", ctx);
-            object output = null;
+            object output;
             try
             {
                 output = _scriptHost.Engine.Execute(script, scope);
@@ -80,9 +75,8 @@ namespace Bracket.Samples.AppAutomation
             if (!String.IsNullOrEmpty(cboEvents.Text))
             {
                 _curScriptName = cboEvents.Text.Trim();
-                string script = string.Empty;
 
-                script = Settings.Default[_curScriptName + "_Handler"] as string;
+                var script = Settings.Default[_curScriptName + "_Handler"] as string;
 
                 txtScript.Text = script;
             }

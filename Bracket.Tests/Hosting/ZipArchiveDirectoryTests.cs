@@ -106,7 +106,7 @@ namespace Bracket.Tests.Hosting
             //Given
             var dir = new ZipArchiveDirectory("Fresh.zip");
             //when
-            string[] directories = dir.GetDirectories(".", "*");
+            string[] directories = dir.GetDirectoryEntires(".", "*");
             //Then
             Assert.That(directories.Length,Is.EqualTo(1));
             Assert.That(directories[0], Is.EqualTo(FullPath("Fresh")));
@@ -118,7 +118,7 @@ namespace Bracket.Tests.Hosting
             //Given
             var dir = new ZipArchiveDirectory("Fresh.zip");
             //when
-            string[] directories = dir.GetDirectories(@"Fresh\lib\IronRuby", "*");
+            string[] directories = dir.GetDirectoryEntires(@"Fresh\lib\IronRuby", "*");
             //then
             Assert.That(directories.Length,Is.EqualTo(2));
             Assert.That(String.Join(",", directories), Is.EqualTo(FullPath(@"Fresh/lib/IronRuby/digest") + "," + FullPath("Fresh/lib/IronRuby/test")));
@@ -130,7 +130,7 @@ namespace Bracket.Tests.Hosting
             //Given
             var dir = new ZipArchiveDirectory("Fresh.zip");
             //when
-            string[] files = dir.GetFiles(".", "*");
+            string[] files = dir.GetFileEntries(".", "*");
             //then
             Assert.That(files.Length, Is.EqualTo(2));
             Assert.That(files[1], Is.EqualTo(FullPath("file1.txt")));
@@ -142,7 +142,7 @@ namespace Bracket.Tests.Hosting
             //given
             var dir = new ZipArchiveDirectory("Fresh.zip");
             //when
-            string[] files = dir.GetFiles("Fresh", "*");
+            string[] files = dir.GetFileEntries("Fresh", "*");
             //then
             Assert.That(files.Length, Is.EqualTo(4));
             Assert.That(files[files.Length - 1], Is.EqualTo(FullPath("Fresh/README.txt")));

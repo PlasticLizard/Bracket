@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-using Bracket.Samples.AppAutomation;
 
-namespace Bracket.Hosting.Samples.Embedded
+namespace Bracket.Samples.AppAutomation
 {
     static class Program
     {

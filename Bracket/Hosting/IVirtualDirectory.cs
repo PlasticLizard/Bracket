@@ -7,8 +7,8 @@ namespace Bracket.Hosting
     {
         bool DirectoryExists(string path);
         bool FileExists(string path);
-        string[] GetDirectories(string path, string searchPattern);
-        string[] GetFiles(string path, string searchPattern);
+        string[] GetDirectoryEntires(string path, string searchPattern);
+        string[] GetFileEntries(string path, string searchPattern);
         
         Assembly LoadAssemblyFromPath(string path);
 

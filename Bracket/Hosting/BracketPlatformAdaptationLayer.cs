@@ -40,24 +40,34 @@ namespace Bracket.Hosting
             return dir.FileExists(path);
         }
 
-        public override string[] GetDirectories(string path, string searchPattern)
+        public override string[] GetFileSystemEntries(string path, string searchPattern, bool includeFiles, bool includeDirectories)
         {
-            path = ExpandPath(path);
-
-            IVirtualDirectory dir = GetVirtualDirectoryForPath(path);
-            if (dir == null)
-                return base.GetDirectories(path, searchPattern);
-            return dir.GetDirectories(path, searchPattern);
+            var entries = new List<string>();
+            if (includeDirectories)
+                entries.AddRange(GetDirectoryEntires(path,searchPattern));
+            if (includeFiles)
+                entries.AddRange(GetFileEntries(path,searchPattern));
+            return entries.ToArray();
         }
 
-        public override string[] GetFiles(string path, string searchPattern)
+        public string[] GetDirectoryEntires(string path, string searchPattern)
         {
             path = ExpandPath(path);
 
             IVirtualDirectory dir = GetVirtualDirectoryForPath(path);
             if (dir == null)
-                return base.GetFiles(path, searchPattern);
-            return dir.GetFiles(path, searchPattern);
+                return base.GetFileSystemEntries(path, searchPattern,false,true);
+            return dir.GetDirectoryEntires(path, searchPattern);
+        }
+
+        public string[] GetFileEntries(string path, string searchPattern)
+        {
+            path = ExpandPath(path);
+
+            IVirtualDirectory dir = GetVirtualDirectoryForPath(path);
+            if (dir == null)
+                return base.GetFileSystemEntries(path, searchPattern,true,false);
+            return dir.GetFileEntries(path, searchPattern);
         }
 
         public override Assembly LoadAssemblyFromPath(string path)
